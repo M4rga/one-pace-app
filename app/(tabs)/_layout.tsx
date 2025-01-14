@@ -26,7 +26,7 @@ const TabLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="about"
         options={{
           title: "About",
         }}

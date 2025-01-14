@@ -5,14 +5,14 @@
   const index = () => {
     return (
       <ImageBackground
-        source={require("../assets/images/going merry.png")}
+        source={require("../assets/images/goingMerry.png")}
         style={{ flex: 1 }}
       >
         <Image 
           source={require("../assets/images/scritta.png")} 
           style={styles.scritta} 
         />
-        <Link href={"/(tabs)"} replace style={{position: "absolute", width: "100%", height: "100%"}}></Link>
+        <Link href={"/(tabs)"} replace style={styles.link}></Link>
       </ImageBackground>
     );
   };
@@ -25,6 +25,11 @@
       left: "10%",
       bottom: "25%",
     },
+    link: {
+      position: "absolute", 
+      width: "100%", 
+      height: "100%"
+    }
   });
 
-  export default index;
+  export default index;     
