@@ -7,6 +7,7 @@ const index = () => {
       <Link href={{pathname: '../otherPages/video', params: { id: '1' }}}> Episodio uno </Link>
       <Link href={{pathname: '../otherPages/video', params: { id: '2' }}}> Episodio due </Link>
       <Link href={{pathname: '../otherPages/video', params: { id: '3' }}}> Episodio tre </Link>
+      <Link href={{pathname: '../otherPages/video', params: { id: '4' }}}> Episodio quattro </Link>
     </View>
   )
 }

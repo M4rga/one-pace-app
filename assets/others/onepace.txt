@@ -108,17 +108,17 @@ Arco Alabasta 1080
 
 SAGA SKYPIEA
 Arco Jaya 720
-77 
-78 
-79 
-80 
-81 
-82 
-83 
-84 
-85 
+77 n4qUcfEb
+78 geAar1EM
+79 Bbv8xGfF
+80 cdZZJfya
+81 W7y16Wo1
+82 ApNTYCGH
+83 b3Dk65va
+84 Vt4arQPc
 
 Arco Skypiea 1080 (Pace Episodes 1-19 then Original Episodes 188-195. (start from 8:34) After 195, watch Episode 207, 05:17 - 8:39 and Episode 225, 2:04 - 3:10)
+85 
 86 
 87 
 88 
@@ -137,18 +137,18 @@ Arco Skypiea 1080 (Pace Episodes 1-19 then Original Episodes 188-195. (start fro
 101 
 102 
 103 
-104 
 
 SAGA WATER 7
 Arco Long Ring Long Land 720
+104 
 105 
 106 
 107 
 108 
 109 
-110 
 
 Arco Water 7 720
+110 
 111 
 112 
 113 
@@ -168,9 +168,9 @@ Arco Water 7 720
 127 
 128 
 129 
-130
 
 Arco Enies Lobby 720
+130
 131 
 132 
 133 
@@ -195,17 +195,17 @@ Arco Enies Lobby 720
 152 
 153 
 154 
-155 
 
 Arco Dopo Enies Lobby 720
+155 
 156 
 157 
 158 
 159 
-160 
 
 SAGA THRILLER BARK
 Arco Thriller Bark 720
+160 
 161 
 162 
 163 
@@ -227,10 +227,10 @@ Arco Thriller Bark 720
 179 
 180 
 181 
-182 
 
 SAGA GUERRA PER LA SUPREMAZIA
 Arco Arcipelago Sabaody 720
+182 
 183 
 184 
 185 
@@ -241,16 +241,16 @@ Arco Arcipelago Sabaody 720
 190
 191 
 192 
-193 
 
 Arco Amazon Lily 720
+193 
 194 
 195 
 196 
 197 
-198 
 
 Arco Impel Down 720
+198 
 199 
 200 
 201 
@@ -260,12 +260,12 @@ Arco Impel Down 720
 205 
 206 
 207 
-208 
 
 If You Could Go Anywhere... The Adventures of the Straw Hats 720
-209 
+208 
 
 Arco Marineford 720
+209 
 210 
 211 
 212 
@@ -281,9 +281,9 @@ Arco Marineford 720
 222 
 223 
 224 
-225 
 
 Arco Dopo la guerra 720
+225 
 226 
 227 
 228 
@@ -291,15 +291,15 @@ Arco Dopo la guerra 720
 230 
 231 
 232
-233 
 
 SAGA DELL'ISOLA DEGLI UOMINI-PESCE
 Arco Ritorno all'arcipelago Sabaody 720
+233 
 234 
 235 
-236
 
 Arco Isola degli uomini-pesce 720
+236
 237 
 238 
 239 
@@ -323,7 +323,7 @@ Arco Isola degli uomini-pesce 720
 257 
 258 
 259 
-260
 
 SAGA DI DRESSROSA
 Arco Punk Hazard 720
+260
