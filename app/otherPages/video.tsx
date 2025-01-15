@@ -1,13 +1,27 @@
 import { View, StyleSheet, Text } from "react-native";
-import React, { useRef } from 'react';
-import { useLocalSearchParams, useRouter  } from "expo-router";
-import { Video, VideoFullscreenUpdateEvent } from 'expo-av';
+import React, { useEffect, useRef } from 'react';
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { Video, VideoFullscreenUpdateEvent, Audio } from 'expo-av';
 
 const VideoPlayer = () => {
   const router = useRouter();
   const videoRef = useRef<Video>(null);
   const params = useLocalSearchParams();
   const { id = null } = params;
+
+  useEffect(() => {
+    // Configura la modalità audio
+    const configureAudio = async () => {
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        staysActiveInBackground: false,
+        playsInSilentModeIOS: true, // Ignora la modalità silenziosa
+        shouldDuckAndroid: true,
+        playThroughEarpieceAndroid: false,
+      });
+    };
+    configureAudio();
+  }, []);
 
   const handleEnterFullscreen = () => {
     if (videoRef.current) {
@@ -16,10 +30,10 @@ const VideoPlayer = () => {
   };
 
   const handleFullscreenUpdate = (status: VideoFullscreenUpdateEvent) => {
-    if (status.fullscreenUpdate == 2 ) {
-      router.back()
+    if (status.fullscreenUpdate == 2) {
+      router.back();
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -41,7 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  }
+  },
 });
 
 export default VideoPlayer;
