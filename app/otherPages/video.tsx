@@ -1,7 +1,7 @@
 import { View, StyleSheet, Text } from "react-native";
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Video, VideoFullscreenUpdateEvent, Audio } from 'expo-av';
+import { Video, VideoFullscreenUpdateEvent, Audio } from "expo-av";
 
 const VideoPlayer = () => {
   const router = useRouter();
@@ -10,14 +10,9 @@ const VideoPlayer = () => {
   const { id = null } = params;
 
   useEffect(() => {
-    // Configura la modalità audio
     const configureAudio = async () => {
       await Audio.setAudioModeAsync({
-        allowsRecordingIOS: false,
-        staysActiveInBackground: false,
-        playsInSilentModeIOS: true, // Ignora la modalità silenziosa
-        shouldDuckAndroid: true,
-        playThroughEarpieceAndroid: false,
+        playsInSilentModeIOS: true,
       });
     };
     configureAudio();
@@ -39,7 +34,7 @@ const VideoPlayer = () => {
     <View style={styles.container}>
       <Video
         ref={videoRef}
-        source={{ uri: 'https://pixeldrain.com/api/file/WU4Vk7Sn' }}
+        source={{ uri: "https://pixeldrain.com/api/file/7m6KDEuw" }}
         useNativeControls={true}
         shouldPlay={true}
         onLoad={handleEnterFullscreen}
