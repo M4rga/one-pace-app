@@ -1,0 +1,15 @@
+1. Open the expo project
+2. In the terminal type: "npx expo prebuild". This will create two new folders, "ios" and "android", both of them containing the corresponding native project of the app
+3. Cut the ios folder to another directory and open it as a xcode project
+4. Press on "name of the project (root directory) premi poi il nome del progetto in tagets e vai in generale
+5. under the "Signing" section press on automatically manage signing
+6. Select the team or sign it to ur NONE apple developer account
+7. On the nav bar press on product => Clean Build Folder
+8. Select "name of the project" and select "Generic iOS Device"
+9. On the nav bar press on product => Archive (After it loads it might ask for pwd)
+10. It shoud open the Archives, right click on the project and press on show in folder
+11. Right click on the .xcarchive and press on show package contents
+12. Go to Products => Applications and Cut the File thats in there
+13. Create a new folder on the Desktop named "Payload" and paste the file in it
+14. Right click on Payload Folder and press on Compress "Payload", this should create a "Payload.zip"
+15. Rename it and change the extensions to ".ipa"
