@@ -1,7 +1,8 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import React, { useEffect, useRef } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Video, VideoFullscreenUpdateEvent, Audio } from "expo-av";
+// import * as Notifications from "expo-notifications";
 
 const VideoPlayer = () => {
   const router = useRouter();
@@ -16,6 +17,38 @@ const VideoPlayer = () => {
       });
     };
     configureAudio();
+
+    // const disableNotifications = async () => {
+    //   await Notifications.setNotificationHandler({
+    //     handleNotification: async () => {
+    //       return {
+    //         shouldShowAlert: false, // Non mostrare l'alert della notifica
+    //         shouldPlaySound: false, // Non suonare una notifica
+    //         shouldSetBadge: false, // Non aggiornare il badge
+    //       };
+    //     },
+    //   });
+    // };
+
+    // const enableNotifications = async () => {
+    //   await Notifications.setNotificationHandler({
+    //     handleNotification: async () => {
+    //       return {
+    //         shouldShowAlert: true,
+    //         shouldPlaySound: true,
+    //         shouldSetBadge: true,
+    //       };
+    //     },
+    //   });
+    // };
+
+    // // Disabilita notifiche all'inizio
+    // disableNotifications();
+
+    // return () => {
+    //   // Riabilita notifiche quando il componente si smonta
+    //   enableNotifications();
+    // };
   }, []);
 
   const handleEnterFullscreen = () => {
@@ -25,7 +58,7 @@ const VideoPlayer = () => {
   };
 
   const handleFullscreenUpdate = (status: VideoFullscreenUpdateEvent) => {
-    if (status.fullscreenUpdate == 2) {
+    if (status.fullscreenUpdate === 2) {
       router.back();
     }
   };
@@ -40,7 +73,7 @@ const VideoPlayer = () => {
         onLoad={handleEnterFullscreen}
         onFullscreenUpdate={handleFullscreenUpdate}
       />
-      <Text>Loading...</Text>
+      <ActivityIndicator size="small" color="black" />
     </View>
   );
 };

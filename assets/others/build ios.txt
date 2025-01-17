@@ -13,3 +13,21 @@
 13. Create a new folder on the Desktop named "Payload" and paste the file in it
 14. Right click on Payload Folder and press on Compress "Payload", this should create a "Payload.zip"
 15. Rename it and change the extensions to ".ipa"
+
+
+TEMA CHIARO
+sfondo spento: #e9e9ea
+sfondo acceso: #34c759
+
+pallino: #ffffff
+
+TEMA SCURO
+sfondo spento: #39393d
+sfondo acceso: #30d158
+
+pallino: white
+
+
+SFONDO:
+white
+#1c1c1e
