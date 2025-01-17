@@ -1,23 +1,43 @@
 import { View, StyleSheet, ActivityIndicator } from "react-native";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Video, VideoFullscreenUpdateEvent, Audio } from "expo-av";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import * as Notifications from "expo-notifications";
 
 const VideoPlayer = () => {
   const router = useRouter();
   const videoRef = useRef<Video>(null);
   const params = useLocalSearchParams();
+  const [silentMode, setSilentMode] = useState<boolean>(false);
   const { id = null } = params;
+
+  useEffect(() => {
+    const loadSwitchStates = async () => {
+      try {
+        const savedStates = await AsyncStorage.getItem("switchStates");
+        if (savedStates) {
+          const parsedStates = JSON.parse(savedStates);
+          setSilentMode(parsedStates.silentmode || false); // Imposta il valore per silentMode
+        }
+      } catch (error) {
+        console.error("Errore durante il caricamento degli stati:", error);
+      }
+    };
+
+    loadSwitchStates();
+  }, []);
 
   useEffect(() => {
     const configureAudio = async () => {
       await Audio.setAudioModeAsync({
-        playsInSilentModeIOS: true,
+        playsInSilentModeIOS: silentMode, // Usa il valore di silentMode
       });
     };
     configureAudio();
+  }, [silentMode]); // Ricarica quando silentMode cambia
 
+  // useEffect(() => {
     // const disableNotifications = async () => {
     //   await Notifications.setNotificationHandler({
     //     handleNotification: async () => {
@@ -49,7 +69,7 @@ const VideoPlayer = () => {
     //   // Riabilita notifiche quando il componente si smonta
     //   enableNotifications();
     // };
-  }, []);
+  // }, []);
 
   const handleEnterFullscreen = () => {
     if (videoRef.current) {

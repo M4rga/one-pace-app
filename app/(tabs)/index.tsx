@@ -4,10 +4,10 @@ import { View, StyleSheet } from 'react-native';
 const index = () => {
   return (
     <View style={styles.container}>
-      <Link href={{pathname: '../otherPages/video', params: { id: '1' }}}> Episodio uno </Link>
-      <Link href={{pathname: '../otherPages/video', params: { id: '2' }}}> Episodio due </Link>
-      <Link href={{pathname: '../otherPages/video', params: { id: '3' }}}> Episodio tre </Link>
-      <Link href={{pathname: '../otherPages/video', params: { id: '4' }}}> Episodio quattro </Link>
+      <Link href={{pathname: '../otherPages/video', params: { id: '1' }}}> Episode 1 </Link>
+      <Link href={{pathname: '../otherPages/video', params: { id: '2' }}}> Episode 2 </Link>
+      <Link href={{pathname: '../otherPages/video', params: { id: '3' }}}> Episode 3 </Link>
+      <Link href={{pathname: '../otherPages/video', params: { id: '4' }}}> Episode 4 </Link>
     </View>
   )
 }

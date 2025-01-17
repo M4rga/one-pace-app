@@ -1,14 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Switch, StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Settings = () => {
   const [switchStates, setSwitchStates] = useState<{ [key: string]: boolean }>({});
 
+  // Leggi lo stato salvato da AsyncStorage al caricamento del componente
+  useEffect(() => {
+    const loadSwitchStates = async () => {
+      try {
+        const savedStates = await AsyncStorage.getItem("switchStates");
+        if (savedStates) {
+          setSwitchStates(JSON.parse(savedStates)); // Imposta lo stato salvato
+        }
+      } catch (error) {
+        console.error("Errore durante il caricamento degli stati:", error);
+      }
+    };
+
+    loadSwitchStates();
+  }, []);
+
+  // Salva lo stato aggiornato in AsyncStorage
+  const saveSwitchStates = async (states: { [key: string]: boolean }) => {
+    try {
+      await AsyncStorage.setItem("switchStates", JSON.stringify(states));
+    } catch (error) {
+      console.error("Errore durante il salvataggio degli stati:", error);
+    }
+  };
+
+  // Gestione dello switch
   const toggleSwitch = (id: string) => {
-    setSwitchStates((prevStates) => ({
-      ...prevStates,
-      [id]: !prevStates[id],
-    }));
+    setSwitchStates((prevStates) => {
+      const updatedStates = {
+        ...prevStates,
+        [id]: !prevStates[id],
+      };
+      saveSwitchStates(updatedStates); // Salva il nuovo stato
+      return updatedStates;
+    });
   };
 
   const getSwitchValue = (id: string) => switchStates[id] || false;
@@ -17,37 +48,25 @@ const Settings = () => {
     <View style={styles.container}>
       {/* Switch 1 */}
       <View style={styles.settingRow}>
-        <Text style={styles.label}>Enable Feature 1</Text>
+        <Text style={styles.label}>Play on silent mode</Text>
         <Switch
           trackColor={{ false: "#e9e9ea", true: "#34c759" }}
           thumbColor={"white"}
           ios_backgroundColor="#e9e9ea"
-          onValueChange={() => toggleSwitch("feature1")}
-          value={getSwitchValue("feature1")}
+          onValueChange={() => toggleSwitch("silentmode")}
+          value={getSwitchValue("silentmode")}
         />
       </View>
 
       {/* Switch 2 */}
       <View style={styles.settingRowDark}>
-        <Text style={styles.labelDark}>Enable Feature 2</Text>
+        <Text style={styles.labelDark}>Hide notificaions</Text>
         <Switch
           trackColor={{ false: "#39393d", true: "#30d158" }}
           thumbColor={"white"}
           ios_backgroundColor="#39393d"
-          onValueChange={() => toggleSwitch("feature2")}
-          value={getSwitchValue("feature2")}
-        />
-      </View>
-
-      {/* Switch 3 */}
-      <View style={styles.settingRow}>
-        <Text style={styles.label}>Enable Feature 3</Text>
-        <Switch
-          trackColor={{ false: "#e9e9ea", true: "#34c759" }}
-          thumbColor={"white"}
-          ios_backgroundColor="#e9e9ea"
-          onValueChange={() => toggleSwitch("feature3")}
-          value={getSwitchValue("feature3")}
+          onValueChange={() => toggleSwitch("hidenotification")}
+          value={getSwitchValue("hidenotification")}
         />
       </View>
     </View>
