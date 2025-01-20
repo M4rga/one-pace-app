@@ -31,7 +31,7 @@ const index = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://github.com/M4rga/one-pace-app/blob/0545d65adaa5d38d74fe50dd722e1cac7ca469a0/assets/others/onepace.txt'); // Sostituisci con l'URL del tuo file JSON
+        const response = await fetch('https://raw.githubusercontent.com/M4rga/one-pace-app/main/assets/others/episodes.json'); // Sostituisci con l'URL del tuo file JSON
         const data: EpisodeData = await response.json();
         setEpisodeData(data);
       } catch (error) {
