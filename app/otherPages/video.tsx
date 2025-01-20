@@ -27,7 +27,7 @@ const VideoPlayer = () => {
           setVibrateNotif(parsedStates.silencenotification || false);
         }
       } catch (error) {
-        console.error("Errore durante il caricamento degli stati:", error);
+        console.error("Error: can't load settins");
       }
     };
 
@@ -51,9 +51,9 @@ const VideoPlayer = () => {
             Vibration.vibrate();
           }
           return {
-            shouldShowAlert: hideNotif, // Non mostrare l'alert della notifica
-            shouldPlaySound: silenceNotif, // Non suonare una notifica
-            shouldSetBadge: true, // Non aggiornare il badge
+            shouldShowAlert: hideNotif,
+            shouldPlaySound: silenceNotif,
+            shouldSetBadge: true,
           };
         },
       });
@@ -71,11 +71,9 @@ const VideoPlayer = () => {
       });
     };
 
-    // Disabilita notifiche all'inizio
     disableNotifications();
 
     return () => {
-      // Riabilita notifiche quando il componente si smonta
       enableNotifications();
     };
   }, []);
@@ -94,8 +92,8 @@ const VideoPlayer = () => {
 
   const handleVideoError = () => {
     Alert.alert(
-      "Errore",
-      "Errore nel caricamento del link",
+      "Error",
+      "Error link not found",
       [
         {
           text: "OK",
@@ -114,7 +112,7 @@ const VideoPlayer = () => {
     <View style={styles.container}>
       <Video
         ref={videoRef}
-        source={{ uri: "https://pixeldrain.com/api/file/7m6KDEuw" }}
+        source={{ uri: `https://pixeldrain.com/api/file/${id}` }}
         useNativeControls={true}
         shouldPlay={true}
         onLoad={handleEnterFullscreen}

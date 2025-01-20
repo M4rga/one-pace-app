@@ -2,46 +2,278 @@
   "East Blue Saga": {
     "Romance Dawn Arc": {
       "romanceDawn1": {
-        "id": 1,
-        "description": "Breve descrizione dell'episodio.",
-        "duration": "24:30",
-        "releaseDate": "2025-01-01"
+        "id": "7m6KDEuw"
       },
       "romanceDawn2": {
-        "id": 2,
-        "description": "Breve descrizione dell'episodio.",
-        "duration": "26:15",
-        "releaseDate": "2025-01-08"
+        "id": "93yn1Vfd"
+      },
+      "romanceDawn3": {
+        "id": "iEELzmgL"
+      },
+      "romanceDawn4": {
+        "id": "qdbKnx18"
       }
     },
     "Orange Town Arc": {
       "orangetown1": {
-        "id": 3,
-        "description": "Breve descrizione dell'episodio.",
-        "duration": "22:45",
-        "releaseDate": "2025-01-15"
+        "id": "zzPjEGpN"
+      },
+      "orangetown2": {
+        "id": "wRbeNxb1"
+      },
+      "orangetown3": {
+        "id": "XzxKa3nn"
+      }
+    },
+    "Syrup Village": {
+      "syrupvillage1": {
+        "id": "uQiDd5rt"
+      },
+      "syrupvillage2": {
+        "id": "1QuALhZt"
+      },
+      "syrupvillage3": {
+        "id": "t85q8xs2"
+      },
+      "syrupvillage4": {
+        "id": "PoA3Z7Uz"
+      },
+      "syrupvillage5": {
+        "id": "QE6xqvEE"
+      },
+      "syrupvillage6": {
+        "id": "DvFSpteS"
+      }
+    },
+    "Arlong Park": {
+      "arlongpark1": {
+        "id": "Pe4tZK7i"
+      },
+      "arlongpark2": {
+        "id": "Arb6koQV"
+      },
+      "arlongpark3": {
+        "id": "bTZmu6kN"
+      },
+      "arlongpark4": {
+        "id": "k3GQyNH6"
+      },
+      "arlongpark5": {
+        "id": "oZtRPBtp"
+      },
+      "arlongpark6": {
+        "id": "VL3DX1Kq"
+      },
+      "arlongpark7": {
+        "id": "aQcRpvbQ"
+      },
+      "arlongpark8": {
+        "id": "bsRHSnny"
+      },
+      "arlongpark9": {
+        "id": "skFYN25a"
+      },
+      "arlongpark10": {
+        "id": "XA728sSY"
+      }
+    },
+    "Baratie": {
+      "baratie1": {
+        "id": "iVhUf7G6"
+      },
+      "baratie2": {
+        "id": "RMXhRh46"
+      },
+      "baratie3": {
+        "id": "59Jf8hYk"
+      },
+      "baratie4": {
+        "id": "bCmoajci"
+      },
+      "baratie5": {
+        "id": "XqHAKjcV"
+      },
+      "baratie6": {
+        "id": "nNXJVWPB"
+      },
+      "baratie7": {
+        "id": "FaYPwkUZ"
+      },
+      "baratie8": {
+        "id": "cUZdcY5H"
+      },
+      "baratie9": {
+        "id": "zpGwKq7m"
+      }
+    },
+    "Loguetown": {
+      "loguetown1": {
+        "id": "zg93yr3q"
+      },
+      "loguetown2": {
+        "id": "8YgoECEy"
+      },
+      "loguetown3": {
+        "id": "Zi35sKUX"
       }
     }
   },
   "Arabasta Saga": {
     "Reverse Mountain Arc": {
       "reversemountain1": {
-        "id": 4,
-        "description": "Breve descrizione dell'episodio.",
-        "duration": "25:00",
-        "releaseDate": "2025-02-01"
+        "id": "ZFzkeQJd"
       },
       "reversemountain2": {
-        "id": 5,
-        "description": "Breve descrizione dell'episodio.",
-        "duration": "25:00",
-        "releaseDate": "2025-02-01"
+        "id": "GSNttj6q"
+      }
+    },
+    "Whisky Peak": {
+      "whiskypeak1": {
+        "id": "YE1HVgKP"
       },
-      "reversemountain3": {
-        "id": 6,
-        "description": "Breve descrizione dell'episodio.",
-        "duration": "25:00",
-        "releaseDate": "2025-02-01"
+      "whiskypeak2": {
+        "id": "NAbZrP2J"
+      }
+    },
+    "Il diario di Cobi e Helmeppo": {
+      "cobihelmeppo1": {
+        "id": "amJEcihy"
+      }
+    },
+    "Little Garden": {
+      "littlegarden1": {
+        "id": "HMJzBt1D"
+      },
+      "littlegarden2": {
+        "id": "2UFrgMao"
+      },
+      "littlegarden3": {
+        "id": "k9a8VHRT"
+      },
+      "littlegarden4": {
+        "id": "UxAfMbxm"
+      },
+      "littlegarden5": {
+        "id": "k4sStFMg"
+      }
+    },
+    "Drum Kingdom": {
+      "drumkingdom1": {
+        "id": "hCBLtSCu"
+      },
+      "drumkingdom2": {
+        "id": "b3jmeryK"
+      },
+      "drumkingdom3": {
+        "id": "Z1zzY66C"
+      },
+      "drumkingdom4": {
+        "id": "UJiiK33w"
+      },
+      "drumkingdom5": {
+        "id": "3AMxLeRY"
+      },
+      "drumkingdom6": {
+        "id": "2xjEp8YA"
+      },
+      "drumkingdom7": {
+        "id": "4nuqChvJ"
+      },
+      "drumkingdom8": {
+        "id": "TjZaJWAk"
+      }
+    },
+    "Alabasta": {
+      "alabasta1": {
+        "id": "bXXjYzZk"
+      },
+      "alabasta2": {
+        "id": "rpWQsyF3"
+      },
+      "alabasta3": {
+        "id": "bYSy7Mt9"
+      },
+      "alabasta4": {
+        "id": "ivqahJuG"
+      },
+      "alabasta5": {
+        "id": "a47HcDQJ"
+      },
+      "alabasta6": {
+        "id": "4DuUCFu3"
+      },
+      "alabasta7": {
+        "id": "zRbuh4k7"
+      },
+      "alabasta8": {
+        "id": "cqTeNybZ"
+      },
+      "alabasta9": {
+        "id": "vYRsFYzt"
+      },
+      "alabasta10": {
+        "id": "E2Tze1XM"
+      },
+      "alabasta11": {
+        "id": "SYBDZHwW"
+      },
+      "alabasta12": {
+        "id": "RwGyyDH8"
+      },
+      "alabasta13": {
+        "id": "7b5omVCi"
+      },
+      "alabasta14": {
+        "id": "54BohWu1"
+      },
+      "alabasta15": {
+        "id": "2bLYWLee"
+      },
+      "alabasta16": {
+        "id": "8Lj3o5MK"
+      },
+      "alabasta17": {
+        "id": "nnKsjKsy"
+      },
+      "alabasta18": {
+        "id": "w6e5bq7n"
+      },
+      "alabasta19": {
+        "id": "m32r8JBv"
+      },
+      "alabasta20": {
+        "id": "kUc1EXXJ"
+      },
+      "alabasta21": {
+        "id": "LHY2LTtm"
+      }
+    }
+  },
+  "Skypiea Saga": {
+    "Jaya": {
+      "jaya1": {
+        "id": "n4qUcfEb"
+      },
+      "jaya2": {
+        "id": "geAar1EM"
+      },
+      "jaya3": {
+        "id": "Bbv8xGfF"
+      },
+      "jaya4": {
+        "id": "cdZZJfya"
+      },
+      "jaya5": {
+        "id": "W7y16Wo1"
+      },
+      "jaya6": {
+        "id": "ApNTYCGH"
+      },
+      "jaya7": {
+        "id": "b3Dk65va"
+      },
+      "jaya8": {
+        "id": "Vt4arQPc"
       }
     }
   }

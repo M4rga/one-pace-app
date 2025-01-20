@@ -1,4 +1,4 @@
-1. Open the expo project
+1. Open the expo project on a mac
 2. In the terminal type: "npx expo prebuild". This will create two new folders, "ios" and "android", both of them containing the corresponding native project of the app
 3. Cut the ios folder to another directory and open it as a xcode project
 4. Press on "name of the project (root directory) premi poi il nome del progetto in tagets e vai in generale

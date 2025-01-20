@@ -54,7 +54,7 @@ const index = () => {
   if (!episodeData) {
     return (
       <View style={styles.container}>
-        <Text>Errore nel caricamento dei dati</Text>
+        <Text>Error data loading</Text>
       </View>
     );
   }
