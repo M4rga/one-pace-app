@@ -1,15 +1,18 @@
-import { View, StyleSheet, ActivityIndicator } from "react-native";
+import { View, StyleSheet, ActivityIndicator, Alert, Vibration  } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Video, VideoFullscreenUpdateEvent, Audio } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import * as Notifications from "expo-notifications";
+import * as Notifications from "expo-notifications";
 
 const VideoPlayer = () => {
   const router = useRouter();
   const videoRef = useRef<Video>(null);
   const params = useLocalSearchParams();
   const [silentMode, setSilentMode] = useState<boolean>(false);
+  const [hideNotif, setHideNotif] = useState<boolean>(false);
+  const [silenceNotif, setSilenceNotif] = useState<boolean>(false);
+  const [vibrateNotif, setVibrateNotif] = useState<boolean>(false);
   const { id = null } = params;
 
   useEffect(() => {
@@ -18,7 +21,10 @@ const VideoPlayer = () => {
         const savedStates = await AsyncStorage.getItem("switchStates");
         if (savedStates) {
           const parsedStates = JSON.parse(savedStates);
-          setSilentMode(parsedStates.silentmode || false); // Imposta il valore per silentMode
+          setSilentMode(parsedStates.silentmode || false);
+          setHideNotif(parsedStates.hidenotification || false);
+          setSilenceNotif(parsedStates.silencenotification || false);
+          setVibrateNotif(parsedStates.silencenotification || false);
         }
       } catch (error) {
         console.error("Errore durante il caricamento degli stati:", error);
@@ -31,45 +37,48 @@ const VideoPlayer = () => {
   useEffect(() => {
     const configureAudio = async () => {
       await Audio.setAudioModeAsync({
-        playsInSilentModeIOS: silentMode, // Usa il valore di silentMode
+        playsInSilentModeIOS: silentMode,
       });
     };
     configureAudio();
-  }, [silentMode]); // Ricarica quando silentMode cambia
+  }, [silentMode]);
 
-  // useEffect(() => {
-    // const disableNotifications = async () => {
-    //   await Notifications.setNotificationHandler({
-    //     handleNotification: async () => {
-    //       return {
-    //         shouldShowAlert: false, // Non mostrare l'alert della notifica
-    //         shouldPlaySound: false, // Non suonare una notifica
-    //         shouldSetBadge: false, // Non aggiornare il badge
-    //       };
-    //     },
-    //   });
-    // };
+  useEffect(() => {
+    const disableNotifications = async () => {
+      await Notifications.setNotificationHandler({
+        handleNotification: async () => {
+          if(vibrateNotif) {
+            Vibration.vibrate();
+          }
+          return {
+            shouldShowAlert: hideNotif, // Non mostrare l'alert della notifica
+            shouldPlaySound: silenceNotif, // Non suonare una notifica
+            shouldSetBadge: true, // Non aggiornare il badge
+          };
+        },
+      });
+    };
 
-    // const enableNotifications = async () => {
-    //   await Notifications.setNotificationHandler({
-    //     handleNotification: async () => {
-    //       return {
-    //         shouldShowAlert: true,
-    //         shouldPlaySound: true,
-    //         shouldSetBadge: true,
-    //       };
-    //     },
-    //   });
-    // };
+    const enableNotifications = async () => {
+      await Notifications.setNotificationHandler({
+        handleNotification: async () => {
+          return {
+            shouldShowAlert: true,
+            shouldPlaySound: true,
+            shouldSetBadge: true,
+          };
+        },
+      });
+    };
 
-    // // Disabilita notifiche all'inizio
-    // disableNotifications();
+    // Disabilita notifiche all'inizio
+    disableNotifications();
 
-    // return () => {
-    //   // Riabilita notifiche quando il componente si smonta
-    //   enableNotifications();
-    // };
-  // }, []);
+    return () => {
+      // Riabilita notifiche quando il componente si smonta
+      enableNotifications();
+    };
+  }, []);
 
   const handleEnterFullscreen = () => {
     if (videoRef.current) {
@@ -83,6 +92,24 @@ const VideoPlayer = () => {
     }
   };
 
+  const handleVideoError = () => {
+    Alert.alert(
+      "Errore",
+      "Errore nel caricamento del link",
+      [
+        {
+          text: "OK",
+          onPress: () => {
+            router.back();
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+  
+  console.log(silentMode, hideNotif, silenceNotif, vibrateNotif, "------------------------------------------------" )
+
   return (
     <View style={styles.container}>
       <Video
@@ -92,6 +119,7 @@ const VideoPlayer = () => {
         shouldPlay={true}
         onLoad={handleEnterFullscreen}
         onFullscreenUpdate={handleFullscreenUpdate}
+        onError={handleVideoError}
       />
       <ActivityIndicator size="small" color="black" />
     </View>

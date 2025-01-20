@@ -69,6 +69,30 @@ const Settings = () => {
           value={getSwitchValue("hidenotification")}
         />
       </View>
+
+      {/* Switch 3 */}
+      <View style={styles.settingRowDark}>
+        <Text style={styles.labelDark}>Silence notificaions</Text>
+        <Switch
+          trackColor={{ false: "#39393d", true: "#30d158" }}
+          thumbColor={"white"}
+          ios_backgroundColor="#39393d"
+          onValueChange={() => toggleSwitch("silencenotification")}
+          value={getSwitchValue("silencenotification")}
+        />
+      </View>
+
+      {/* Switch 4 */}
+      <View style={styles.settingRowDark}>
+        <Text style={styles.labelDark}>Vibrate notificaions</Text>
+        <Switch
+          trackColor={{ false: "#39393d", true: "#30d158" }}
+          thumbColor={"white"}
+          ios_backgroundColor="#39393d"
+          onValueChange={() => toggleSwitch("vibratenotification")}
+          value={getSwitchValue("vibratenotification")}
+        />
+      </View>
     </View>
   );
 };
