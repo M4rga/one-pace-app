@@ -1,0 +1,42 @@
+{
+  "East Blue Saga": {
+    "Romance Dawn Arc": {
+      "romanceDawn1": {
+        "id": 1,
+        "description": "Breve descrizione dell'episodio.",
+        "duration": "24:30",
+        "releaseDate": "2025-01-01"
+      },
+      "romanceDawn2": {
+        "id": 2,
+        "description": "Breve descrizione dell'episodio.",
+        "duration": "26:15",
+        "releaseDate": "2025-01-08"
+      }
+    },
+    "Orange Town Arc": {
+      "orangetown1": {
+        "id": 3,
+        "description": "Breve descrizione dell'episodio.",
+        "duration": "22:45",
+        "releaseDate": "2025-01-15"
+      }
+    }
+  },
+  "Arabasta Saga": {
+    "Reverse Mountain Arc": {
+      "reversemountain1": {
+        "id": 4,
+        "description": "Breve descrizione dell'episodio.",
+        "duration": "25:00",
+        "releaseDate": "2025-02-01"
+      },
+      "reversemountain2": {
+        "id": 3,
+        "description": "Breve descrizione dell'episodio.",
+        "duration": "25:00",
+        "releaseDate": "2025-02-01"
+      }
+    }
+  }
+}
