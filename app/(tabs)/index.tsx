@@ -2,7 +2,6 @@ import { Link } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
 
-// Definizione delle interfacce per i dati
 interface Episode {
   id: number;
   description: string;
@@ -23,15 +22,14 @@ interface EpisodeData {
 }
 
 const index = () => {
-  // Stato per i dati caricati
   const [episodeData, setEpisodeData] = useState<EpisodeData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Caricamento dei dati JSON
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://raw.githubusercontent.com/M4rga/one-pace-app/main/assets/others/episodes.json'); // Sostituisci con l'URL del tuo file JSON
+        const url = `https://raw.githubusercontent.com/M4rga/one-pace-app/main/assets/others/episodes.json?timestamp=${new Date().getTime()}`;
+        const response = await fetch(url);
         const data: EpisodeData = await response.json();
         setEpisodeData(data);
       } catch (error) {
@@ -40,9 +38,10 @@ const index = () => {
         setLoading(false);
       }
     };
-
+  
     fetchData();
   }, []);
+  
 
   if (loading) {
     return (
@@ -60,7 +59,6 @@ const index = () => {
     );
   }
 
-  // Creazione dinamica dei link per ogni episodio, dichiarando il tipo
   const links: JSX.Element[] = [];
   Object.values(episodeData).forEach((saga: Saga) => {
     Object.values(saga).forEach((arc: Arc) => {
