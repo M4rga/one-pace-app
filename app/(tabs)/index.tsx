@@ -1,6 +1,12 @@
-import { Link } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
+import { Link } from "expo-router";
+import { useEffect, useState } from "react";
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Text,
+  ScrollView,
+} from "react-native";
 
 interface Episode {
   id: number;
@@ -33,15 +39,14 @@ const index = () => {
         const data: EpisodeData = await response.json();
         setEpisodeData(data);
       } catch (error) {
-        console.error('Errore nel caricamento dei dati:', error);
+        console.error("Errore nel caricamento dei dati:", error);
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchData();
   }, []);
-  
 
   if (loading) {
     return (
@@ -66,7 +71,10 @@ const index = () => {
         links.push(
           <Link
             key={episode.id}
-            href={{ pathname: '../otherPages/video', params: { id: episode.id.toString() } }}
+            href={{
+              pathname: "../otherPages/video",
+              params: { id: episode.id.toString() },
+            }}
           >
             Episode {episode.id}
           </Link>
@@ -75,18 +83,12 @@ const index = () => {
     });
   });
 
-  return (
-    <View style={styles.container}>
-      {links}
-    </View>
-  );
+  return <ScrollView style={styles.container}>{links}</ScrollView>;
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
 

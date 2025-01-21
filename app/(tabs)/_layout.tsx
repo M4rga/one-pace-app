@@ -15,17 +15,19 @@ import React from "react";
 const TabLayout = () => {
   return (
     <Tabs
-      screenOptions={{
-        // header: () => <CustomHeader />,
-      }}
+      screenOptions={
+        {
+          // header: () => <CustomHeader />,
+        }
+      }
     >
       <Tabs.Screen
         name="index"
         options={{
           title: "Episodes",
           headerRight: () => (
-            <Link href={"/otherPages/settings"} >Settings</Link>
-          )
+            <Link href={"/otherPages/settings"}>Settings</Link>
+          ),
         }}
       />
       <Tabs.Screen

@@ -1,4 +1,10 @@
-import { View, StyleSheet, ActivityIndicator, Alert, Vibration  } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Alert,
+  Vibration,
+} from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Video, VideoFullscreenUpdateEvent, Audio } from "expo-av";
@@ -47,7 +53,7 @@ const VideoPlayer = () => {
     const disableNotifications = async () => {
       await Notifications.setNotificationHandler({
         handleNotification: async () => {
-          if(vibrateNotif) {
+          if (vibrateNotif) {
             Vibration.vibrate();
           }
           return {
@@ -105,8 +111,14 @@ const VideoPlayer = () => {
       { cancelable: false }
     );
   };
-  
-  console.log(silentMode, hideNotif, silenceNotif, vibrateNotif, "------------------------------------------------" )
+
+  console.log(
+    silentMode,
+    hideNotif,
+    silenceNotif,
+    vibrateNotif,
+    "------------------------------------------------"
+  );
 
   return (
     <View style={styles.container}>

@@ -1,279 +1,789 @@
 {
   "East Blue Saga": {
     "Romance Dawn Arc": {
-      "romanceDawn1": {
-        "id": "7m6KDEuw"
-      },
-      "romanceDawn2": {
-        "id": "93yn1Vfd"
-      },
-      "romanceDawn3": {
-        "id": "iEELzmgL"
-      },
-      "romanceDawn4": {
-        "id": "qdbKnx18"
+      "nepisodes": 4,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es", "Fr", "De", "Ar", "Pt"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "romanceDawn1": { "id": "7m6KDEuw" },
+        "romanceDawn2": { "id": "93yn1Vfd" },
+        "romanceDawn3": { "id": "iEELzmgL" },
+        "romanceDawn4": { "id": "qdbKnx18" }
       }
     },
     "Orange Town Arc": {
-      "orangetown1": {
-        "id": "zzPjEGpN"
-      },
-      "orangetown2": {
-        "id": "wRbeNxb1"
-      },
-      "orangetown3": {
-        "id": "XzxKa3nn"
+      "nepisodes": 3,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es", "Fr", "Ar", "Pt"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "orangetown1": { "id": "zzPjEGpN" },
+        "orangetown2": { "id": "wRbeNxb1" },
+        "orangetown3": { "id": "XzxKa3nn" }
       }
     },
     "Syrup Village": {
-      "syrupvillage1": {
-        "id": "uQiDd5rt"
-      },
-      "syrupvillage2": {
-        "id": "1QuALhZt"
-      },
-      "syrupvillage3": {
-        "id": "t85q8xs2"
-      },
-      "syrupvillage4": {
-        "id": "PoA3Z7Uz"
-      },
-      "syrupvillage5": {
-        "id": "QE6xqvEE"
-      },
-      "syrupvillage6": {
-        "id": "DvFSpteS"
+      "nepisodes": 6,
+      "dub": ["Jpn"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["480p", "1080p"],
+      "status": "to be redone",
+      "episodes": {
+        "syrupvillage1": { "id": "uQiDd5rt" },
+        "syrupvillage2": { "id": "1QuALhZt" },
+        "syrupvillage3": { "id": "t85q8xs2" },
+        "syrupvillage4": { "id": "PoA3Z7Uz" },
+        "syrupvillage5": { "id": "QE6xqvEE" },
+        "syrupvillage6": { "id": "DvFSpteS" }
       }
     },
-    "Arlong Park": {
-      "arlongpark1": {
-        "id": "Pe4tZK7i"
-      },
-      "arlongpark2": {
-        "id": "Arb6koQV"
-      },
-      "arlongpark3": {
-        "id": "bTZmu6kN"
-      },
-      "arlongpark4": {
-        "id": "k3GQyNH6"
-      },
-      "arlongpark5": {
-        "id": "oZtRPBtp"
-      },
-      "arlongpark6": {
-        "id": "VL3DX1Kq"
-      },
-      "arlongpark7": {
-        "id": "aQcRpvbQ"
-      },
-      "arlongpark8": {
-        "id": "bsRHSnny"
-      },
-      "arlongpark9": {
-        "id": "skFYN25a"
-      },
-      "arlongpark10": {
-        "id": "XA728sSY"
+    "Gaimon": {
+      "nepisodes": 1,
+      "dub": ["Jpn", "Eng", "Es"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "gaimon1": { "id": "HxSPFb19" }
       }
     },
     "Baratie": {
-      "baratie1": {
-        "id": "iVhUf7G6"
-      },
-      "baratie2": {
-        "id": "RMXhRh46"
-      },
-      "baratie3": {
-        "id": "59Jf8hYk"
-      },
-      "baratie4": {
-        "id": "bCmoajci"
-      },
-      "baratie5": {
-        "id": "XqHAKjcV"
-      },
-      "baratie6": {
-        "id": "nNXJVWPB"
-      },
-      "baratie7": {
-        "id": "FaYPwkUZ"
-      },
-      "baratie8": {
-        "id": "cUZdcY5H"
-      },
-      "baratie9": {
-        "id": "zpGwKq7m"
+      "nepisodes": 9,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "baratie1": { "id": "iVhUf7G6" },
+        "baratie2": { "id": "RMXhRh46" },
+        "baratie3": { "id": "59Jf8hYk" },
+        "baratie4": { "id": "bCmoajci" },
+        "baratie5": { "id": "XqHAKjcV" },
+        "baratie6": { "id": "nNXJVWPB" },
+        "baratie7": { "id": "FaYPwkUZ" },
+        "baratie8": { "id": "cUZdcY5H" },
+        "baratie9": { "id": "zpGwKq7m" }
+      }
+    },
+    "Arlong Park": {
+      "nepisodes": 10,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["480p"],
+      "status": "complete",
+      "episodes": {
+        "arlongpark1": { "id": "Pe4tZK7i" },
+        "arlongpark2": { "id": "Arb6koQV" },
+        "arlongpark3": { "id": "bTZmu6kN" },
+        "arlongpark4": { "id": "k3GQyNH6" },
+        "arlongpark5": { "id": "oZtRPBtp" },
+        "arlongpark6": { "id": "VL3DX1Kq" },
+        "arlongpark7": { "id": "aQcRpvbQ" },
+        "arlongpark8": { "id": "bsRHSnny" },
+        "arlongpark9": { "id": "skFYN25a" },
+        "arlongpark10": { "id": "XA728sSY" }
+      }
+    },
+    "The Adventures of Buggy's Crew": {
+      "nepisodes": 1,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "buggyscrew1": { "id": "rEfoxTFw" }
       }
     },
     "Loguetown": {
-      "loguetown1": {
-        "id": "zg93yr3q"
-      },
-      "loguetown2": {
-        "id": "8YgoECEy"
-      },
-      "loguetown3": {
-        "id": "Zi35sKUX"
+      "nepisodes": 3,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["480p"],
+      "status": "complete",
+      "episodes": {
+        "loguetown1": { "id": "zg93yr3q" },
+        "loguetown2": { "id": "8YgoECEy" },
+        "loguetown3": { "id": "Zi35sKUX" }
       }
     }
   },
   "Arabasta Saga": {
     "Reverse Mountain Arc": {
-      "reversemountain1": {
-        "id": "ZFzkeQJd"
-      },
-      "reversemountain2": {
-        "id": "GSNttj6q"
+      "nepisodes": 2,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "reversemountain1": { "id": "ZFzkeQJd" },
+        "reversemountain2": { "id": "GSNttj6q" }
       }
     },
     "Whisky Peak": {
-      "whiskypeak1": {
-        "id": "YE1HVgKP"
-      },
-      "whiskypeak2": {
-        "id": "NAbZrP2J"
+      "nepisodes": 2,
+      "dub": ["Jpn"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["480p"],
+      "status": "to be redone",
+      "episodes": {
+        "whiskypeak1": { "id": "YE1HVgKP" },
+        "whiskypeak2": { "id": "NAbZrP2J" }
       }
     },
-    "Il diario di Cobi e Helmeppo": {
-      "cobihelmeppo1": {
-        "id": "amJEcihy"
+    "The Trials of Koby-Meppo": {
+      "nepisodes": 1,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "kobymeppo1": { "id": "amJEcihy" }
       }
     },
     "Little Garden": {
-      "littlegarden1": {
-        "id": "HMJzBt1D"
-      },
-      "littlegarden2": {
-        "id": "2UFrgMao"
-      },
-      "littlegarden3": {
-        "id": "k9a8VHRT"
-      },
-      "littlegarden4": {
-        "id": "UxAfMbxm"
-      },
-      "littlegarden5": {
-        "id": "k4sStFMg"
+      "nepisodes": 5,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["480p"],
+      "status": "complete",
+      "episodes": {
+        "littlegarden1": { "id": "HMJzBt1D" },
+        "littlegarden2": { "id": "2UFrgMao" },
+        "littlegarden3": { "id": "k9a8VHRT" },
+        "littlegarden4": { "id": "UxAfMbxm" },
+        "littlegarden5": { "id": "k4sStFMg" }
       }
     },
-    "Drum Kingdom": {
-      "drumkingdom1": {
-        "id": "hCBLtSCu"
-      },
-      "drumkingdom2": {
-        "id": "b3jmeryK"
-      },
-      "drumkingdom3": {
-        "id": "Z1zzY66C"
-      },
-      "drumkingdom4": {
-        "id": "UJiiK33w"
-      },
-      "drumkingdom5": {
-        "id": "3AMxLeRY"
-      },
-      "drumkingdom6": {
-        "id": "2xjEp8YA"
-      },
-      "drumkingdom7": {
-        "id": "4nuqChvJ"
-      },
-      "drumkingdom8": {
-        "id": "TjZaJWAk"
+    "Drum Island": {
+      "nepisodes": 8,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "drumisland1": { "id": "hCBLtSCu" },
+        "drumisland2": { "id": "b3jmeryK" },
+        "drumisland3": { "id": "Z1zzY66C" },
+        "drumisland4": { "id": "UJiiK33w" },
+        "drumisland5": { "id": "3AMxLeRY" },
+        "drumisland6": { "id": "2xjEp8YA" },
+        "drumisland7": { "id": "4nuqChvJ" },
+        "drumisland8": { "id": "TjZaJWAk" }
       }
     },
-    "Alabasta": {
-      "alabasta1": {
-        "id": "bXXjYzZk"
-      },
-      "alabasta2": {
-        "id": "rpWQsyF3"
-      },
-      "alabasta3": {
-        "id": "bYSy7Mt9"
-      },
-      "alabasta4": {
-        "id": "ivqahJuG"
-      },
-      "alabasta5": {
-        "id": "a47HcDQJ"
-      },
-      "alabasta6": {
-        "id": "4DuUCFu3"
-      },
-      "alabasta7": {
-        "id": "zRbuh4k7"
-      },
-      "alabasta8": {
-        "id": "cqTeNybZ"
-      },
-      "alabasta9": {
-        "id": "vYRsFYzt"
-      },
-      "alabasta10": {
-        "id": "E2Tze1XM"
-      },
-      "alabasta11": {
-        "id": "SYBDZHwW"
-      },
-      "alabasta12": {
-        "id": "RwGyyDH8"
-      },
-      "alabasta13": {
-        "id": "7b5omVCi"
-      },
-      "alabasta14": {
-        "id": "54BohWu1"
-      },
-      "alabasta15": {
-        "id": "2bLYWLee"
-      },
-      "alabasta16": {
-        "id": "8Lj3o5MK"
-      },
-      "alabasta17": {
-        "id": "nnKsjKsy"
-      },
-      "alabasta18": {
-        "id": "w6e5bq7n"
-      },
-      "alabasta19": {
-        "id": "m32r8JBv"
-      },
-      "alabasta20": {
-        "id": "kUc1EXXJ"
-      },
-      "alabasta21": {
-        "id": "LHY2LTtm"
+    "Arabasta": {
+      "nepisodes": 21,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "arabasta1": { "id": "bXXjYzZk" },
+        "arabasta2": { "id": "rpWQsyF3" },
+        "arabasta3": { "id": "bYSy7Mt9" },
+        "arabasta4": { "id": "ivqahJuG" },
+        "arabasta5": { "id": "a47HcDQJ" },
+        "arabasta6": { "id": "4DuUCFu3" },
+        "arabasta7": { "id": "zRbuh4k7" },
+        "arabasta8": { "id": "cqTeNybZ" },
+        "arabasta9": { "id": "vYRsFYzt" },
+        "arabasta10": { "id": "E2Tze1XM" },
+        "arabasta11": { "id": "SYBDZHwW" },
+        "arabasta12": { "id": "RwGyyDH8" },
+        "arabasta13": { "id": "7b5omVCi" },
+        "arabasta14": { "id": "54BohWu1" },
+        "arabasta15": { "id": "2bLYWLee" },
+        "arabasta16": { "id": "8Lj3o5MK" },
+        "arabasta17": { "id": "nnKsjKsy" },
+        "arabasta18": { "id": "w6e5bq7n" },
+        "arabasta19": { "id": "m32r8JBv" },
+        "arabasta20": { "id": "kUc1EXXJ" },
+        "arabasta21": { "id": "LHY2LTtm" }
       }
     }
   },
-  "Skypiea Saga": {
-    "Jaya": {
-      "jaya1": {
-        "id": "n4qUcfEb"
-      },
-      "jaya2": {
-        "id": "geAar1EM"
-      },
-      "jaya3": {
-        "id": "Bbv8xGfF"
-      },
-      "jaya4": {
-        "id": "cdZZJfya"
-      },
-      "jaya5": {
-        "id": "W7y16Wo1"
-      },
-      "jaya6": {
-        "id": "ApNTYCGH"
-      },
-      "jaya7": {
-        "id": "b3Dk65va"
-      },
-      "jaya8": {
-        "id": "Vt4arQPc"
+  "Sky Island Saga": {
+    "Jaya Arc": {
+      "nepisodes": 8,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "jaya1": { "id": "n4qUcfEb" },
+        "jaya2": { "id": "geAar1EM" },
+        "jaya3": { "id": "Bbv8xGfF" },
+        "jaya4": { "id": "cdZZJfya" },
+        "jaya5": { "id": "W7y16Wo1" },
+        "jaya6": { "id": "ApNTYCGH" },
+        "jaya7": { "id": "b3Dk65va" },
+        "jaya8": { "id": "Vt4arQPc" }
+      }
+    },
+    "Skypiea Arc": {
+      "nepisodes": 19,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es (1-4)", "Fr", "Es (5)"],
+      "resolution": ["1080p"],
+      "status": "work in progress",
+      "episodes": {
+        "skypiea1": { "id": "" },
+        "skypiea2": { "id": "" },
+        "skypiea3": { "id": "" },
+        "skypiea4": { "id": "" },
+        "skypiea5": { "id": "" },
+        "skypiea6": { "id": "" },
+        "skypiea7": { "id": "" },
+        "skypiea8": { "id": "" },
+        "skypiea9": { "id": "" },
+        "skypiea10": { "id": "" },
+        "skypiea11": { "id": "" },
+        "skypiea12": { "id": "" },
+        "skypiea13": { "id": "" },
+        "skypiea14": { "id": "" },
+        "skypiea15": { "id": "" },
+        "skypiea16": { "id": "" },
+        "skypiea17": { "id": "" },
+        "skypiea18": { "id": "" },
+        "skypiea19": { "id": "" }
+      }
+    }
+  },
+  "Water 7 Saga": {
+    "Long Ring Long Land Arc": {
+      "nepisodes": 6,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng"],
+      "resolution": ["720p"],
+      "status": "to be redone",
+      "episodes": {
+        "longringlongland1": { "id": "" },
+        "longringlongland2": { "id": "" },
+        "longringlongland3": { "id": "" },
+        "longringlongland4": { "id": "" },
+        "longringlongland5": { "id": "" },
+        "longringlongland6": { "id": "" }
+      }
+    },
+    "Water Seven Arc": {
+      "nepisodes": 20,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Fr"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "waterseven1": { "id": "" },
+        "waterseven2": { "id": "" },
+        "waterseven3": { "id": "" },
+        "waterseven4": { "id": "" },
+        "waterseven5": { "id": "" },
+        "waterseven6": { "id": "" },
+        "waterseven7": { "id": "" },
+        "waterseven8": { "id": "" },
+        "waterseven9": { "id": "" },
+        "waterseven10": { "id": "" },
+        "waterseven11": { "id": "" },
+        "waterseven12": { "id": "" },
+        "waterseven13": { "id": "" },
+        "waterseven14": { "id": "" },
+        "waterseven15": { "id": "" },
+        "waterseven16": { "id": "" },
+        "waterseven17": { "id": "" },
+        "waterseven18": { "id": "" },
+        "waterseven19": { "id": "" },
+        "waterseven20": { "id": "" }
+      }
+    },
+    "Enies Lobby Arc": {
+      "nepisodes": 25,
+      "dub": ["Jpn", "Eng (23-25)"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["720p", "1080p"],
+      "status": "complete",
+      "episodes": {
+        "enieslobby1": { "id": "" },
+        "enieslobby2": { "id": "" },
+        "enieslobby3": { "id": "" },
+        "enieslobby4": { "id": "" },
+        "enieslobby5": { "id": "" },
+        "enieslobby6": { "id": "" },
+        "enieslobby7": { "id": "" },
+        "enieslobby8": { "id": "" },
+        "enieslobby9": { "id": "" },
+        "enieslobby10": { "id": "" },
+        "enieslobby11": { "id": "" },
+        "enieslobby12": { "id": "" },
+        "enieslobby13": { "id": "" },
+        "enieslobby14": { "id": "" },
+        "enieslobby15": { "id": "" },
+        "enieslobby16": { "id": "" },
+        "enieslobby17": { "id": "" },
+        "enieslobby18": { "id": "" },
+        "enieslobby19": { "id": "" },
+        "enieslobby20": { "id": "" },
+        "enieslobby21": { "id": "" },
+        "enieslobby22": { "id": "" },
+        "enieslobby23": { "id": "" },
+        "enieslobby24": { "id": "" },
+        "enieslobby25": { "id": "" }
+      }
+    },
+    "Post-Enies Lobby Arc": {
+      "nepisodes": 5,
+      "dub": ["Jpn"],
+      "sub": ["Eng"],
+      "resolution": ["720p"],
+      "status": "to be redone",
+      "episodes": {
+        "postenieslobby1": { "id": "" },
+        "postenieslobby2": { "id": "" },
+        "postenieslobby3": { "id": "" },
+        "postenieslobby4": { "id": "" },
+        "postenieslobby5": { "id": "" }
+      }
+    }
+  },
+  "Thriller Bark Saga": {
+    "Thriller Bark Arc": {
+      "nepisodes": 22,
+      "dub": ["Jpn"],
+      "sub": ["Eng", "Es"],
+      "resolution": ["720p"],
+      "status": "to be redone",
+      "episodes": {
+        "thrillerbark1": { "id": "" },
+        "thrillerbark2": { "id": "" },
+        "thrillerbark3": { "id": "" },
+        "thrillerbark4": { "id": "" },
+        "thrillerbark5": { "id": "" },
+        "thrillerbark6": { "id": "" },
+        "thrillerbark7": { "id": "" },
+        "thrillerbark8": { "id": "" },
+        "thrillerbark9": { "id": "" },
+        "thrillerbark10": { "id": "" },
+        "thrillerbark11": { "id": "" },
+        "thrillerbark12": { "id": "" },
+        "thrillerbark13": { "id": "" },
+        "thrillerbark14": { "id": "" },
+        "thrillerbark15": { "id": "" },
+        "thrillerbark16": { "id": "" },
+        "thrillerbark17": { "id": "" },
+        "thrillerbark18": { "id": "" },
+        "thrillerbark19": { "id": "" },
+        "thrillerbark20": { "id": "" },
+        "thrillerbark21": { "id": "" },
+        "thrillerbark22": { "id": "" }
+      }
+    }
+  },
+  "Summit War Saga": {
+    "Sabaody Archipelago Arc": {
+      "nepisodes": 11,
+      "dub": ["Jpn"],
+      "sub": ["Eng", "Es"],
+      "resolution": ["720p"],
+      "status": "to be redone",
+      "episodes": {
+        "sabaodyarchipelago1": { "id": "" },
+        "sabaodyarchipelago2": { "id": "" },
+        "sabaodyarchipelago3": { "id": "" },
+        "sabaodyarchipelago4": { "id": "" },
+        "sabaodyarchipelago5": { "id": "" },
+        "sabaodyarchipelago6": { "id": "" },
+        "sabaodyarchipelago7": { "id": "" },
+        "sabaodyarchipelago8": { "id": "" },
+        "sabaodyarchipelago9": { "id": "" },
+        "sabaodyarchipelago10": { "id": "" },
+        "sabaodyarchipelago11": { "id": "" }
+      }
+    },
+    "Amazon Lily Arc": {
+      "nepisodes": 5,
+      "dub": ["Jpn"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["720p"],
+      "status": "to be redone",
+      "episodes": {
+        "amazonlily1": { "id": "" },
+        "amazonlily2": { "id": "" },
+        "amazonlily3": { "id": "" },
+        "amazonlily4": { "id": "" },
+        "amazonlily5": { "id": "" }
+      }
+    },
+    "Impel Down Arc": {
+      "nepisodes": 10,
+      "dub": ["Jpn"],
+      "sub": ["Eng", "Es"],
+      "resolution": ["720p"],
+      "status": "to be redone",
+      "episodes": {
+        "impeldown1": { "id": "" },
+        "impeldown2": { "id": "" },
+        "impeldown3": { "id": "" },
+        "impeldown4": { "id": "" },
+        "impeldown5": { "id": "" },
+        "impeldown6": { "id": "" },
+        "impeldown7": { "id": "" },
+        "impeldown8": { "id": "" },
+        "impeldown9": { "id": "" },
+        "impeldown10": { "id": "" }
+      }
+    },
+    "The Adventures of the Straw Hats Arc": {
+      "nepisodes": 1,
+      "dub": ["Eng", "Es", "Jpn"],
+      "sub": ["Eng", "Es", "Jpn"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "strawhats1": { "id": "" }
+      }
+    },
+    "Marineford Arc": {
+      "nepisodes": 17,
+      "dub": ["Jpn"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["720p"],
+      "status": "complete",
+      "episodes": {
+        "marineford1": { "id": "" },
+        "marineford2": { "id": "" },
+        "marineford3": { "id": "" },
+        "marineford4": { "id": "" },
+        "marineford5": { "id": "" },
+        "marineford6": { "id": "" },
+        "marineford7": { "id": "" },
+        "marineford8": { "id": "" },
+        "marineford9": { "id": "" },
+        "marineford10": { "id": "" },
+        "marineford11": { "id": "" },
+        "marineford12": { "id": "" },
+        "marineford13": { "id": "" },
+        "marineford14": { "id": "" },
+        "marineford15": { "id": "" },
+        "marineford16": { "id": "" },
+        "marineford17": { "id": "" }
+      }
+    },
+    "Post-War Arc": {
+      "nepisodes": 8,
+      "dub": ["Jpn", "Eng (1-6)"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "postwar1": { "id": "" },
+        "postwar2": { "id": "" },
+        "postwar3": { "id": "" },
+        "postwar4": { "id": "" },
+        "postwar5": { "id": "" },
+        "postwar6": { "id": "" },
+        "postwar7": { "id": "" },
+        "postwar8": { "id": "" }
+      }
+    }
+  },
+  "Fish-Man Island Saga": {
+    "Return to Sabaody Arc": {
+      "nepisodes": 3,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es", "Fr", "Ar"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "returntosabaody1": { "id": "" },
+        "returntosabaody2": { "id": "" },
+        "returntosabaody3": { "id": "" }
+      }
+    },
+    "Fishman Island Arc": {
+      "nepisodes": 24,
+      "dub": ["Jpn"],
+      "sub": ["Eng", "Es"],
+      "resolution": ["720p"],
+      "status": "to be redone",
+      "episodes": {
+        "fishmanisland1": { "id": "" },
+        "fishmanisland2": { "id": "" },
+        "fishmanisland3": { "id": "" },
+        "fishmanisland4": { "id": "" },
+        "fishmanisland5": { "id": "" },
+        "fishmanisland6": { "id": "" },
+        "fishmanisland7": { "id": "" },
+        "fishmanisland8": { "id": "" },
+        "fishmanisland9": { "id": "" },
+        "fishmanisland10": { "id": "" },
+        "fishmanisland11": { "id": "" },
+        "fishmanisland12": { "id": "" },
+        "fishmanisland13": { "id": "" },
+        "fishmanisland14": { "id": "" },
+        "fishmanisland15": { "id": "" },
+        "fishmanisland16": { "id": "" },
+        "fishmanisland17": { "id": "" },
+        "fishmanisland18": { "id": "" },
+        "fishmanisland19": { "id": "" },
+        "fishmanisland20": { "id": "" },
+        "fishmanisland21": { "id": "" },
+        "fishmanisland22": { "id": "" },
+        "fishmanisland23": { "id": "" },
+        "fishmanisland24": { "id": "" }
+      }
+    }
+  },
+  "Dressrosa Saga": {
+    "Punk Hazard Arc": {
+      "nepisodes": 22,
+      "dub": ["Jpn"],
+      "sub": ["Eng", "Es"],
+      "resolution": ["720p"],
+      "status": "to be redone",
+      "episodes": {
+        "punkhazard1": { "id": "" },
+        "punkhazard2": { "id": "" },
+        "punkhazard3": { "id": "" },
+        "punkhazard4": { "id": "" },
+        "punkhazard5": { "id": "" },
+        "punkhazard6": { "id": "" },
+        "punkhazard7": { "id": "" },
+        "punkhazard8": { "id": "" },
+        "punkhazard9": { "id": "" },
+        "punkhazard10": { "id": "" },
+        "punkhazard11": { "id": "" },
+        "punkhazard12": { "id": "" },
+        "punkhazard13": { "id": "" },
+        "punkhazard14": { "id": "" },
+        "punkhazard15": { "id": "" },
+        "punkhazard16": { "id": "" },
+        "punkhazard17": { "id": "" },
+        "punkhazard18": { "id": "" },
+        "punkhazard19": { "id": "" },
+        "punkhazard20": { "id": "" },
+        "punkhazard21": { "id": "" },
+        "punkhazard22": { "id": "" }
+      }
+    },
+    "Dressrosa Arc": {
+      "nepisodes": 48,
+      "dub": ["Jpn"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["1080p"],
+      "status": "to be redone",
+      "episodes": {
+        "dressrosa1": { "id": "" },
+        "dressrosa2": { "id": "" },
+        "dressrosa3": { "id": "" },
+        "dressrosa4": { "id": "" },
+        "dressrosa5": { "id": "" },
+        "dressrosa6": { "id": "" },
+        "dressrosa7": { "id": "" },
+        "dressrosa8": { "id": "" },
+        "dressrosa9": { "id": "" },
+        "dressrosa10": { "id": "" },
+        "dressrosa11": { "id": "" },
+        "dressrosa12": { "id": "" },
+        "dressrosa13": { "id": "" },
+        "dressrosa14": { "id": "" },
+        "dressrosa15": { "id": "" },
+        "dressrosa16": { "id": "" },
+        "dressrosa17": { "id": "" },
+        "dressrosa18": { "id": "" },
+        "dressrosa19": { "id": "" },
+        "dressrosa20": { "id": "" },
+        "dressrosa21": { "id": "" },
+        "dressrosa22": { "id": "" },
+        "dressrosa23": { "id": "" },
+        "dressrosa24": { "id": "" },
+        "dressrosa25": { "id": "" },
+        "dressrosa26": { "id": "" },
+        "dressrosa27": { "id": "" },
+        "dressrosa28": { "id": "" },
+        "dressrosa29": { "id": "" },
+        "dressrosa30": { "id": "" },
+        "dressrosa31": { "id": "" },
+        "dressrosa32": { "id": "" },
+        "dressrosa33": { "id": "" },
+        "dressrosa34": { "id": "" },
+        "dressrosa35": { "id": "" },
+        "dressrosa36": { "id": "" },
+        "dressrosa37": { "id": "" },
+        "dressrosa38": { "id": "" },
+        "dressrosa39": { "id": "" },
+        "dressrosa40": { "id": "" },
+        "dressrosa41": { "id": "" },
+        "dressrosa42": { "id": "" },
+        "dressrosa43": { "id": "" },
+        "dressrosa44": { "id": "" },
+        "dressrosa45": { "id": "" },
+        "dressrosa46": { "id": "" },
+        "dressrosa47": { "id": "" },
+        "dressrosa48": { "id": "" }
+      }
+    }
+  },
+  "Whole Cake Island Saga": {
+    "Zou Arc": {
+      "nepisodes": 10,
+      "dub": ["Jpn"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["720p"],
+      "status": "to be redone",
+      "episodes": {
+        "zou1": { "id": "" },
+        "zou2": { "id": "" },
+        "zou3": { "id": "" },
+        "zou4": { "id": "" },
+        "zou5": { "id": "" },
+        "zou6": { "id": "" },
+        "zou7": { "id": "" },
+        "zou8": { "id": "" },
+        "zou9": { "id": "" },
+        "zou10": { "id": "" }
+      }
+    },
+    "Whole Cake Island Arc": {
+      "nepisodes": 39,
+      "dub": ["Jpn"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["720p"],
+      "status": "complete",
+      "episodes": {
+        "wholecakeisland1": { "id": "" },
+        "wholecakeisland2": { "id": "" },
+        "wholecakeisland3": { "id": "" },
+        "wholecakeisland4": { "id": "" },
+        "wholecakeisland5": { "id": "" },
+        "wholecakeisland6": { "id": "" },
+        "wholecakeisland7": { "id": "" },
+        "wholecakeisland8": { "id": "" },
+        "wholecakeisland9": { "id": "" },
+        "wholecakeisland10": { "id": "" },
+        "wholecakeisland11": { "id": "" },
+        "wholecakeisland12": { "id": "" },
+        "wholecakeisland13": { "id": "" },
+        "wholecakeisland14": { "id": "" },
+        "wholecakeisland15": { "id": "" },
+        "wholecakeisland16": { "id": "" },
+        "wholecakeisland17": { "id": "" },
+        "wholecakeisland18": { "id": "" },
+        "wholecakeisland19": { "id": "" },
+        "wholecakeisland20": { "id": "" },
+        "wholecakeisland21": { "id": "" },
+        "wholecakeisland22": { "id": "" },
+        "wholecakeisland23": { "id": "" },
+        "wholecakeisland24": { "id": "" },
+        "wholecakeisland25": { "id": "" },
+        "wholecakeisland26": { "id": "" },
+        "wholecakeisland27": { "id": "" },
+        "wholecakeisland28": { "id": "" },
+        "wholecakeisland29": { "id": "" },
+        "wholecakeisland30": { "id": "" },
+        "wholecakeisland31": { "id": "" },
+        "wholecakeisland32": { "id": "" },
+        "wholecakeisland33": { "id": "" },
+        "wholecakeisland34": { "id": "" },
+        "wholecakeisland35": { "id": "" },
+        "wholecakeisland36": { "id": "" },
+        "wholecakeisland37": { "id": "" },
+        "wholecakeisland38": { "id": "" },
+        "wholecakeisland39": { "id": "" }
+      }
+    },
+    "Reverie Arc": {
+      "nepisodes": 3,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "reverie1": { "id": "" },
+        "reverie2": { "id": "" },
+        "reverie3": { "id": "" }
+      }
+    }
+  },
+  "Wano Country Saga": {
+    "Wano Arc": {
+      "nepisodes": 46,
+      "dub": ["Jpn", "Eng (31-)"],
+      "sub": ["Eng", "Es", "Fr", "Ar"],
+      "resolution": ["1080p"],
+      "status": "work in progress",
+      "episodes": {
+        "wano1": { "id": "" },
+        "wano2": { "id": "" },
+        "wano3": { "id": "" },
+        "wano4": { "id": "" },
+        "wano5": { "id": "" },
+        "wano6": { "id": "" },
+        "wano7": { "id": "" },
+        "wano8": { "id": "" },
+        "wano9": { "id": "" },
+        "wano10": { "id": "" },
+        "wano11": { "id": "" },
+        "wano12": { "id": "" },
+        "wano13": { "id": "" },
+        "wano14": { "id": "" },
+        "wano15": { "id": "" },
+        "wano16": { "id": "" },
+        "wano17": { "id": "" },
+        "wano18": { "id": "" },
+        "wano19": { "id": "" },
+        "wano20": { "id": "" },
+        "wano21": { "id": "" },
+        "wano22": { "id": "" },
+        "wano23": { "id": "" },
+        "wano24": { "id": "" },
+        "wano25": { "id": "" },
+        "wano26": { "id": "" },
+        "wano27": { "id": "" },
+        "wano28": { "id": "" },
+        "wano29": { "id": "" },
+        "wano30": { "id": "" },
+        "wano31": { "id": "" },
+        "wano32": { "id": "" },
+        "wano33": { "id": "" },
+        "wano34": { "id": "" },
+        "wano35": { "id": "" },
+        "wano36": { "id": "" },
+        "wano37": { "id": "" },
+        "wano38": { "id": "" },
+        "wano39": { "id": "" },
+        "wano40": { "id": "" },
+        "wano41": { "id": "" },
+        "wano42": { "id": "" },
+        "wano43": { "id": "" },
+        "wano44": { "id": "" },
+        "wano45": { "id": "" },
+        "wano46": { "id": "" }
+      }
+    }
+  },
+  "Final Saga": {
+    "Egghead Arc": {
+      "nepisodes": 14,
+      "dub": ["Jpn"],
+      "sub": ["Eng", "Fr"],
+      "resolution": ["1080p"],
+      "status": "work in progress",
+      "episodes": {
+        "egghead1": { "id": "" },
+        "egghead2": { "id": "" },
+        "egghead3": { "id": "" },
+        "egghead4": { "id": "" },
+        "egghead5": { "id": "" },
+        "egghead6": { "id": "" },
+        "egghead7": { "id": "" },
+        "egghead8": { "id": "" },
+        "egghead9": { "id": "" },
+        "egghead10": { "id": "" },
+        "egghead11": { "id": "" },
+        "egghead12": { "id": "" },
+        "egghead13": { "id": "" },
+        "egghead14": { "id": "" }
       }
     }
   }

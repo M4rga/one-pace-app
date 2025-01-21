@@ -3,7 +3,9 @@ import { View, Text, Switch, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Settings = () => {
-  const [switchStates, setSwitchStates] = useState<{ [key: string]: boolean }>({});
+  const [switchStates, setSwitchStates] = useState<{ [key: string]: boolean }>(
+    {}
+  );
 
   // Leggi lo stato salvato da AsyncStorage al caricamento del componente
   useEffect(() => {
