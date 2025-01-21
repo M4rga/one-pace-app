@@ -31,3 +31,57 @@ pallino: white
 SFONDO:
 white
 #1c1c1e
+
+
+STRUTTURA JSON
+
+{
+  "Saga 1": {
+    "Arc 1": {
+      "nepisodes": 2,
+      "dub": ["Jpn", "Eng"],
+      "sub": ["Eng", "Es", "Fr"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "episode1": { "id": "abc123" },
+        "episode2": { "id": "def456" }
+      }
+    },
+    "Arc 2": {
+      "nepisodes": 2,
+      "dub": ["Jpn"],
+      "sub": ["Eng", "Es"],
+      "resolution": ["720p"],
+      "status": "to be redone",
+      "episodes": {
+        "episode3": { "id": "ghi789" },
+        "episode4": { "id": "jkl012" }
+      }
+    }
+  },
+  "Saga 2": {
+    "Arc 3": {
+      "nepisodes": 2,
+      "dub": ["Jpn", "Eng", "Es"],
+      "sub": ["Eng", "Fr"],
+      "resolution": ["1080p"],
+      "status": "complete",
+      "episodes": {
+        "episode5": { "id": "mno345" },
+        "episode6": { "id": "pqr678" }
+      }
+    },
+    "Arc 4": {
+      "nepisodes": 2,
+      "dub": ["Jpn"],
+      "sub": ["Eng"],
+      "resolution": ["480p"],
+      "status": "to be redone",
+      "episodes": {
+        "episode7": { "id": "stu901" },
+        "episode8": { "id": "vwx234" }
+      }
+    }
+  }
+}
