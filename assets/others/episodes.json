@@ -224,7 +224,7 @@
       }
     },
     "Skypiea Arc": {
-      "nepisodes": 19,
+      "nepisodes": 20,
       "dub": ["Jpn", "Eng"],
       "sub": ["Eng", "Es (1-4)", "Fr", "Es (5)"],
       "resolution": ["1080p"],
@@ -248,7 +248,8 @@
         "skypiea16": { "id": "" },
         "skypiea17": { "id": "" },
         "skypiea18": { "id": "" },
-        "skypiea19": { "id": "" }
+        "skypiea19": { "id": "" },
+        "skypiea20": { "id": "" }
       }
     }
   },
