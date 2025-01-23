@@ -251,7 +251,7 @@ const ExpandableList: React.FC = () => {
                                 <Text style={styles.finishedText}>Completato</Text>
                               ) : (
                                 <View style={styles.progressContainer}>
-                                  <Text style={styles.progressText}>Progresso:</Text>
+                                <Text>{episodesState[episodeData.id]?.progress ?? 0}</Text>
                                   <Progress.Bar
                                     progress={episodesState[episodeData.id]?.progress || 0}
                                     width={null}
@@ -322,10 +322,6 @@ const styles = StyleSheet.create({
   },
   progressContainer: {
     marginTop: 10,
-  },
-  progressText: {
-    fontSize: 14,
-    marginBottom: 5,
   },
   progressBar: {
     height: 10,
