@@ -1,5 +1,6 @@
 import { Tabs, Link } from "expo-router";
 import React from "react";
+import Feather from '@expo/vector-icons/Feather';
 // import { View, SafeAreaView } from "react-native";
 // import { StatusBar } from "expo-status-bar";
 
@@ -26,7 +27,9 @@ const TabLayout = () => {
         options={{
           title: "Episodes",
           headerRight: () => (
-            <Link href={"/otherPages/settings"}>Settings</Link>
+            <Link href={"/otherPages/settings"} style={{marginHorizontal: 20}}>
+              <Feather name="settings" size={24} color="black" />
+            </Link>
           ),
         }}
       />
