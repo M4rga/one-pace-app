@@ -1,36 +1,25 @@
-import {
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  Alert,
-  Vibration,
-} from "react-native";
+import { View, StyleSheet, ActivityIndicator, Alert } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Video, VideoFullscreenUpdateEvent, Audio } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Notifications from "expo-notifications";
 
 const VideoPlayer = () => {
   const router = useRouter();
   const videoRef = useRef<Video>(null);
   const params = useLocalSearchParams();
-  const [silentMode, setSilentMode] = useState<boolean>(false);
-  const [hideNotif, setHideNotif] = useState<boolean>(false);
-  const [silenceNotif, setSilenceNotif] = useState<boolean>(false);
-  const [vibrateNotif, setVibrateNotif] = useState<boolean>(false);
   const { id = null } = params;
+  const [silentMode, setSilentMode] = useState<boolean>(false);
 
+  // useEffect to load the settings switch states from AsyncStorage
   useEffect(() => {
     const loadSwitchStates = async () => {
       try {
         const savedStates = await AsyncStorage.getItem("switchStates");
+        // loades savedStates from AsyncStorage
         if (savedStates) {
           const parsedStates = JSON.parse(savedStates);
           setSilentMode(parsedStates.silentmode || false);
-          setHideNotif(parsedStates.hidenotification || false);
-          setSilenceNotif(parsedStates.silencenotification || false);
-          setVibrateNotif(parsedStates.silencenotification || false);
         }
       } catch (error) {
         console.error("Error: can't load settins");
@@ -40,6 +29,7 @@ const VideoPlayer = () => {
     loadSwitchStates();
   }, []);
 
+  // useEffect to configure the audio settings
   useEffect(() => {
     const configureAudio = async () => {
       await Audio.setAudioModeAsync({
@@ -49,53 +39,21 @@ const VideoPlayer = () => {
     configureAudio();
   }, [silentMode]);
 
-  useEffect(() => {
-    const disableNotifications = async () => {
-      await Notifications.setNotificationHandler({
-        handleNotification: async () => {
-          if (vibrateNotif) {
-            Vibration.vibrate();
-          }
-          return {
-            shouldShowAlert: hideNotif,
-            shouldPlaySound: silenceNotif,
-            shouldSetBadge: true,
-          };
-        },
-      });
-    };
-
-    const enableNotifications = async () => {
-      await Notifications.setNotificationHandler({
-        handleNotification: async () => {
-          return {
-            shouldShowAlert: true,
-            shouldPlaySound: true,
-            shouldSetBadge: true,
-          };
-        },
-      });
-    };
-
-    disableNotifications();
-
-    return () => {
-      enableNotifications();
-    };
-  }, []);
-
+  // Function to enter fullscreen mode on load
   const handleEnterFullscreen = () => {
     if (videoRef.current) {
       videoRef.current.presentFullscreenPlayer();
     }
   };
 
+  // Function to go bach to episode list on exit fullscreen
   const handleFullscreenUpdate = (status: VideoFullscreenUpdateEvent) => {
     if (status.fullscreenUpdate === 2) {
       router.back();
     }
   };
 
+  // Function to handle video error
   const handleVideoError = () => {
     Alert.alert(
       "Error",
@@ -111,14 +69,6 @@ const VideoPlayer = () => {
       { cancelable: false }
     );
   };
-
-  console.log(
-    silentMode,
-    hideNotif,
-    silenceNotif,
-    vibrateNotif,
-    "------------------------------------------------"
-  );
 
   return (
     <View style={styles.container}>

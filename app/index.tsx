@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, ImageBackground, Image, View } from "react-native";
+import { StyleSheet, ImageBackground, Image } from "react-native";
 import { Link } from "expo-router";
 
 const index = () => {

@@ -1,32 +1,21 @@
 import { Tabs, Link } from "expo-router";
 import React from "react";
-// import { View, SafeAreaView } from "react-native";
-// import { StatusBar } from "expo-status-bar";
-
-// function CustomHeader() {
-//   return (
-//     <View>
-//       <SafeAreaView style={{ backgroundColor: "transparent" }} />
-//       <StatusBar backgroundColor="transparent" translucent />
-//     </View>
-//   );
-// }
+import Feather from "@expo/vector-icons/Feather";
 
 const TabLayout = () => {
   return (
-    <Tabs
-      screenOptions={
-        {
-          // header: () => <CustomHeader />,
-        }
-      }
-    >
+    <Tabs>
       <Tabs.Screen
         name="index"
         options={{
           title: "Episodes",
           headerRight: () => (
-            <Link href={"/otherPages/settings"}>Settings</Link>
+            <Link
+              href={"/otherPages/settings"}
+              style={{ marginHorizontal: 15 }}
+            >
+              <Feather name="settings" size={24} color="black" />
+            </Link>
           ),
         }}
       />

@@ -3,43 +3,43 @@ import { View, Text, Switch, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Settings = () => {
-  const [switchStates, setSwitchStates] = useState<{ [key: string]: boolean }>(
-    {}
-  );
+  // prettier-ignore
+  const [switchStates, setSwitchStates] = useState<{ [key: string]: boolean }>({});
 
-  // Leggi lo stato salvato da AsyncStorage al caricamento del componente
+  // useEffect to set the switch states on AsyncStorage
   useEffect(() => {
     const loadSwitchStates = async () => {
       try {
         const savedStates = await AsyncStorage.getItem("switchStates");
+        // saves to savedStates every switchState
         if (savedStates) {
           setSwitchStates(JSON.parse(savedStates)); // Imposta lo stato salvato
         }
       } catch (error) {
-        console.error("Errore durante il caricamento degli stati:", error);
+        console.error("Error on loading states:", error);
       }
     };
 
     loadSwitchStates();
   }, []);
 
-  // Salva lo stato aggiornato in AsyncStorage
+  // sets the switchStates on AsyncStorage
   const saveSwitchStates = async (states: { [key: string]: boolean }) => {
     try {
       await AsyncStorage.setItem("switchStates", JSON.stringify(states));
     } catch (error) {
-      console.error("Errore durante il salvataggio degli stati:", error);
+      console.error("Error on saving the states:", error);
     }
   };
 
-  // Gestione dello switch
+  // dynamic function to create new switch states
   const toggleSwitch = (id: string) => {
     setSwitchStates((prevStates) => {
       const updatedStates = {
         ...prevStates,
         [id]: !prevStates[id],
       };
-      saveSwitchStates(updatedStates); // Salva il nuovo stato
+      saveSwitchStates(updatedStates); // saves the new switch state
       return updatedStates;
     });
   };
@@ -57,42 +57,6 @@ const Settings = () => {
           ios_backgroundColor="#e9e9ea"
           onValueChange={() => toggleSwitch("silentmode")}
           value={getSwitchValue("silentmode")}
-        />
-      </View>
-
-      {/* Switch 2 */}
-      <View style={styles.settingRowDark}>
-        <Text style={styles.labelDark}>Hide notificaions</Text>
-        <Switch
-          trackColor={{ false: "#39393d", true: "#30d158" }}
-          thumbColor={"white"}
-          ios_backgroundColor="#39393d"
-          onValueChange={() => toggleSwitch("hidenotification")}
-          value={getSwitchValue("hidenotification")}
-        />
-      </View>
-
-      {/* Switch 3 */}
-      <View style={styles.settingRowDark}>
-        <Text style={styles.labelDark}>Silence notificaions</Text>
-        <Switch
-          trackColor={{ false: "#39393d", true: "#30d158" }}
-          thumbColor={"white"}
-          ios_backgroundColor="#39393d"
-          onValueChange={() => toggleSwitch("silencenotification")}
-          value={getSwitchValue("silencenotification")}
-        />
-      </View>
-
-      {/* Switch 4 */}
-      <View style={styles.settingRowDark}>
-        <Text style={styles.labelDark}>Vibrate notificaions</Text>
-        <Switch
-          trackColor={{ false: "#39393d", true: "#30d158" }}
-          thumbColor={"white"}
-          ios_backgroundColor="#39393d"
-          onValueChange={() => toggleSwitch("vibratenotification")}
-          value={getSwitchValue("vibratenotification")}
         />
       </View>
     </View>
@@ -119,29 +83,9 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-  settingRowDark: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-    backgroundColor: "#1c1c1e",
-    borderRadius: 10,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
   label: {
     fontSize: 16,
     color: "#000",
-    fontWeight: "400",
-  },
-  labelDark: {
-    fontSize: 16,
-    color: "white",
     fontWeight: "400",
   },
 });
