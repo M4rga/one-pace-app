@@ -1,23 +1,27 @@
 import { View, StyleSheet, ActivityIndicator, Alert } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { Video, VideoFullscreenUpdateEvent, Audio, AVPlaybackStatus } from "expo-av";
+import { useLocalSearchParams, router } from "expo-router";
+import {
+  Video,
+  VideoFullscreenUpdateEvent,
+  Audio,
+  AVPlaybackStatus,
+} from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const VideoPlayer = () => {
-  const router = useRouter();
   const videoRef = useRef<Video>(null);
   const params = useLocalSearchParams();
   const { id = null } = params;
   const [silentMode, setSilentMode] = useState<boolean>(false);
   const [videoProgress, setVideoProgress] = useState<number>(0);
-  
+
   // useEffect to load the settings from AsyncStorage
   useEffect(() => {
     const loadAsync = async () => {
       try {
-        const savedStates = await AsyncStorage.getItem("switchStates");
         // loades savedStates from AsyncStorage
+        const savedStates = await AsyncStorage.getItem("switchStates");
         if (savedStates) {
           const parsedStates = JSON.parse(savedStates);
           setSilentMode(parsedStates.silentmode || false);
@@ -64,8 +68,11 @@ const VideoPlayer = () => {
 
   // Function to go bach to episode list on exit fullscreen
   const handleFullscreenUpdate = (status: VideoFullscreenUpdateEvent) => {
-    if (status.fullscreenUpdate === 2) {
-      router.back();
+    if (status.fullscreenUpdate === 3) {
+      router.replace({
+        pathname: "../(tabs)",
+        params: { prevId: id },
+      });
     }
   };
 
@@ -78,7 +85,10 @@ const VideoPlayer = () => {
         {
           text: "OK",
           onPress: () => {
-            router.back();
+            router.replace({
+              pathname: "../(tabs)",
+              params: { prevId: id },
+            });
           },
         },
       ],
@@ -95,6 +105,7 @@ const VideoPlayer = () => {
       // Save progress to AsyncStorage every second
       if (id) {
         try {
+          // prettier-ignore
           await AsyncStorage.setItem(`progress_${id}`, currentProgress.toString());
         } catch (error) {
           console.error("Error saving progress:", error);

@@ -7,7 +7,9 @@ import {
   Text,
   Pressable,
 } from "react-native";
-import { Link } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Progress from "react-native-progress";
+import { useLocalSearchParams, router } from "expo-router";
 
 // Define the types for the JSON
 interface Data {
@@ -32,19 +34,36 @@ const JSON_URL =
   "https://raw.githubusercontent.com/M4rga/one-pace-app/main/assets/others/episodes.json";
 
 const index: React.FC = () => {
+  const params = useLocalSearchParams();
+  const { prevId = null } = params;
   const [data, setData] = useState<Data | null>(null);
   const [loading, setLoading] = useState(true);
   // prettier-ignore
   const [expandedSagas, setExpandedSagas] = useState<Record<string, boolean>>({});
   const [expandedArcs, setExpandedArcs] = useState<Record<string, boolean>>({});
+  const [progress, setProgress] = useState<Record<string, number>>({});
 
-  // useEffect to fetch data from the online JSON file
+  // useEffect to fetch data from async
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // fetch the JSON data
         const response = await fetch(JSON_URL);
         const json = await response.json();
         setData(json);
+
+        // fetch progress for all episodes
+        const keys = (await AsyncStorage.getAllKeys()).filter((key) =>
+          key.startsWith("progress_")
+        );
+        const progressData = await AsyncStorage.multiGet(keys);
+        const parsedProgress: Record<string, number> = {};
+        progressData.forEach(([key, value]) => {
+          if (value) {
+            parsedProgress[key] = JSON.parse(value);
+          }
+        });
+        setProgress(parsedProgress);
       } catch (error) {
         console.error("Error on loading the json:", error);
       } finally {
@@ -53,6 +72,33 @@ const index: React.FC = () => {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (prevId) {
+      const loadProgressForPrevEpisode = async () => {
+        try {
+          // Crea la chiave dell'episodio
+          const progressKey = `progress_${prevId}`;
+
+          // Recupera il progresso dell'episodio specifico
+          const storedProgress = await AsyncStorage.getItem(progressKey);
+
+          if (storedProgress) {
+            // Se il progresso esiste, aggiorna lo stato del progresso
+            const parsedProgress = JSON.parse(storedProgress);
+            setProgress((prevProgress) => ({
+              ...prevProgress,
+              [progressKey]: parsedProgress,
+            }));
+          }
+        } catch (error) {
+          console.error("Error loading progress for episode:", error);
+        }
+      };
+
+      loadProgressForPrevEpisode();
+    }
+  }, [prevId]);
 
   // when the user clicks on a saga, toggle the visibility of its arcs
   const toggleSaga = (sagaName: string) => {
@@ -151,17 +197,27 @@ const index: React.FC = () => {
                         // for each episode name
                         renderItem={({ item: [episodeName, episodeData] }) => (
                           // Episode
-                          <View style={styles.episodeItem}>
-                            <Link
-                              href={{
+                          <Pressable
+                            style={styles.episodeItem}
+                            onPress={() => {
+                              router.replace({
                                 pathname: "../otherPages/video",
-                                params: { id: episodeData.id },
-                              }}
-                            >
+                                params: { id: episodeData.id }, // Usa query invece di params
+                              });
+                            }}
+                          >
+                            <Text>
                               {/* gets only the numbers of the episode name */}
                               Episode {episodeName.replace(/\D/g, "")}
-                            </Link>
-                          </View>
+                              <Progress.Bar
+                                progress={
+                                  // prettier-ignore
+                                  progress[`progress_${episodeData.id}`] / 2000000 || 0
+                                }
+                                width={200}
+                              />
+                            </Text>
+                          </Pressable>
                         )}
                       />
                     )}
