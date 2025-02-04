@@ -8,6 +8,7 @@ import {
   Pressable,
 } from "react-native";
 import { Link } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Define the types for the JSON
 interface Data {
@@ -27,6 +28,30 @@ interface Arc {
 interface Episode {
   id: string;
 }
+
+// Componente aggiunto per mostrare il progresso dell'episodio
+const EpisodeProgress: React.FC<{ episodeId: string }> = ({ episodeId }) => {
+  const [progress, setProgress] = useState<number>(0);
+
+  useEffect(() => {
+    const fetchProgress = async () => {
+      try {
+        const stored = await AsyncStorage.getItem(`progress_${episodeId}`);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          setProgress(parsed);
+        }
+      } catch (error) {
+        console.error("Error fetching progress", error);
+      }
+    };
+    fetchProgress();
+  }, [episodeId]);
+
+  return (
+    <Text style={styles.progressText}>Progress: {progress.toFixed(2)}%</Text>
+  );
+};
 
 const JSON_URL =
   "https://raw.githubusercontent.com/M4rga/one-pace-app/main/assets/others/episodes.json";
@@ -159,8 +184,12 @@ const index: React.FC = () => {
                               }}
                             >
                               {/* gets only the numbers of the episode name */}
-                              Episode {episodeName.replace(/\D/g, "")}
+                              <Text>
+                                Episode {episodeName.replace(/\D/g, "")}
+                              </Text>
                             </Link>
+                            {/* Visualizza il progresso salvato */}
+                            <EpisodeProgress episodeId={episodeData.id} />
                           </View>
                         )}
                       />
@@ -214,6 +243,11 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginBottom: 5,
     borderRadius: 5,
+  },
+  progressText: {
+    fontSize: 12,
+    color: "#555",
+    marginTop: 5,
   },
 });
 

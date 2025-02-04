@@ -53,7 +53,7 @@ const VideoPlayer = () => {
 
   // Function to go back to episode list on exit fullscreen
   const handleFullscreenUpdate = (status: VideoFullscreenUpdateEvent) => {
-    if (status.fullscreenUpdate === 2) {
+    if (status.fullscreenUpdate === 3) {
       router.back();
     }
   };
