@@ -1,7 +1,12 @@
 import { View, StyleSheet, ActivityIndicator, Alert } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Video, VideoFullscreenUpdateEvent, Audio } from "expo-av";
+import {
+  Video,
+  VideoFullscreenUpdateEvent,
+  Audio,
+  AVPlaybackStatus,
+} from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const VideoPlayer = () => {
@@ -22,7 +27,7 @@ const VideoPlayer = () => {
           setSilentMode(parsedStates.silentmode || false);
         }
       } catch (error) {
-        console.error("Error: can't load settins");
+        console.error("Error: can't load settings");
       }
     };
 
@@ -46,7 +51,7 @@ const VideoPlayer = () => {
     }
   };
 
-  // Function to go bach to episode list on exit fullscreen
+  // Function to go back to episode list on exit fullscreen
   const handleFullscreenUpdate = (status: VideoFullscreenUpdateEvent) => {
     if (status.fullscreenUpdate === 2) {
       router.back();
@@ -70,6 +75,45 @@ const VideoPlayer = () => {
     );
   };
 
+  // Function to handle video load
+  const handleVideoLoad = async (status: AVPlaybackStatus) => {
+    if (!status.isLoaded) return;
+    handleEnterFullscreen();
+    const progressKey = `progress_${id}`;
+    // function to load the progress of the video, it is saved as percentage in AsyncStorage and then converted to milliseconds to seek the video
+    try {
+      const savedProgress = await AsyncStorage.getItem(progressKey);
+      if (savedProgress) {
+        const savedPercentage = JSON.parse(savedProgress);
+        const seekPosition = (savedPercentage / 100) * status.durationMillis!;
+        if (videoRef.current) {
+          await videoRef.current.setStatusAsync({
+            positionMillis: seekPosition,
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error loading progress", error);
+    }
+  };
+
+  // Function to handle the progress of the video it gets the current position of the video in milliseconds and saves it as percentage in AsyncStorage
+  const handlePlaybackStatusUpdate = async (status: any) => {
+    if (status.isLoaded && status.durationMillis) {
+      const progressPercentage =
+        (status.positionMillis / status.durationMillis) * 100;
+      const progressKey = `progress_${id}`;
+      try {
+        await AsyncStorage.setItem(
+          progressKey,
+          JSON.stringify(progressPercentage)
+        );
+      } catch (error) {
+        console.error("Error saving progress", error);
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Video
@@ -77,9 +121,10 @@ const VideoPlayer = () => {
         source={{ uri: `https://pixeldrain.com/api/file/${id}` }}
         useNativeControls={true}
         shouldPlay={true}
-        onLoad={handleEnterFullscreen}
+        onLoad={handleVideoLoad}
         onFullscreenUpdate={handleFullscreenUpdate}
         onError={handleVideoError}
+        onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
       />
       <ActivityIndicator size="small" color="black" />
     </View>
