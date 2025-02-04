@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -7,8 +7,10 @@ import {
   Text,
   Pressable,
 } from "react-native";
-import { Link } from "expo-router";
+import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
+import * as Progress from "react-native-progress";
 
 // Define the types for the JSON
 interface Data {
@@ -29,27 +31,42 @@ interface Episode {
   id: string;
 }
 
-// Componente aggiunto per mostrare il progresso dell'episodio
+// episode progress component that shows the progress of the single episode saved in AsyncStorage every time the user goes back to the episode list
 const EpisodeProgress: React.FC<{ episodeId: string }> = ({ episodeId }) => {
   const [progress, setProgress] = useState<number>(0);
+  const [containerWidth, setContainerWidth] = useState(0);
 
-  useEffect(() => {
-    const fetchProgress = async () => {
-      try {
-        const stored = await AsyncStorage.getItem(`progress_${episodeId}`);
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          setProgress(parsed);
+  // useFocusEffect to fetch the progress from AsyncStorage every time the user is on the episode list
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchProgress = async () => {
+        try {
+          const stored = await AsyncStorage.getItem(`progress_${episodeId}`);
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            setProgress(parsed);
+          } else {
+            setProgress(0);
+          }
+        } catch (error) {
+          console.error("Error fetching progress", error);
         }
-      } catch (error) {
-        console.error("Error fetching progress", error);
-      }
-    };
-    fetchProgress();
-  }, [episodeId]);
+      };
+      fetchProgress();
+    }, [episodeId])
+  );
 
+  // return the progress bar with the progress saved in AsyncStorage
   return (
-    <Text style={styles.progressText}>Progress: {progress.toFixed(2)}%</Text>
+    <View
+      style={{ flex: 1, paddingTop: 5 }}
+      onLayout={(event) => {
+        const { width } = event.nativeEvent.layout;
+        setContainerWidth(width);
+      }}
+    >
+      <Progress.Bar progress={progress / 100} width={containerWidth} />
+    </View>
   );
 };
 
@@ -57,14 +74,15 @@ const JSON_URL =
   "https://raw.githubusercontent.com/M4rga/one-pace-app/main/assets/others/episodes.json";
 
 const index: React.FC = () => {
-  const [data, setData] = useState<Data | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = React.useState<Data | null>(null);
+  const [loading, setLoading] = React.useState(true);
   // prettier-ignore
-  const [expandedSagas, setExpandedSagas] = useState<Record<string, boolean>>({});
-  const [expandedArcs, setExpandedArcs] = useState<Record<string, boolean>>({});
+  const [expandedSagas, setExpandedSagas] = React.useState<Record<string, boolean>>({});
+  // prettier-ignore
+  const [expandedArcs, setExpandedArcs] = React.useState<Record<string, boolean>>({});
 
   // useEffect to fetch data from the online JSON file
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(JSON_URL);
@@ -176,21 +194,22 @@ const index: React.FC = () => {
                         // for each episode name
                         renderItem={({ item: [episodeName, episodeData] }) => (
                           // Episode
-                          <View style={styles.episodeItem}>
-                            <Link
-                              href={{
+                          <Pressable
+                            style={styles.episodeItem}
+                            onPress={() => {
+                              router.push({
                                 pathname: "../otherPages/video",
                                 params: { id: episodeData.id },
-                              }}
-                            >
-                              {/* gets only the numbers of the episode name */}
-                              <Text>
-                                Episode {episodeName.replace(/\D/g, "")}
-                              </Text>
-                            </Link>
-                            {/* Visualizza il progresso salvato */}
+                              });
+                            }}
+                          >
+                            {/* gets only the numbers of the episode name */}
+                            <Text>
+                              Episode {episodeName.replace(/\D/g, "")}
+                            </Text>
+                            {/* shows the progress bar */}
                             <EpisodeProgress episodeId={episodeData.id} />
-                          </View>
+                          </Pressable>
                         )}
                       />
                     )}
