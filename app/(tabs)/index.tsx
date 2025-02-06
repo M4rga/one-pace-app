@@ -74,10 +74,14 @@ const EpisodeProgress: React.FC<{ episodeId: string }> = ({ episodeId }) => {
 };
 
 // download button component that downloads the episode and saves it in the FileSystem and AsyncStorage
-const DownloadButton: React.FC<{ episodeId: string }> = ({ episodeId }) => {
-  const [progress, setProgress] = useState(0);
+// Aggiunta la prop isDownloaded per far sapere al componente se l'episodio risulta già scaricato
+const DownloadButton: React.FC<{
+  episodeId: string;
+  isDownloaded: boolean;
+}> = ({ episodeId, isDownloaded }) => {
+  const [progress, setProgress] = useState(isDownloaded ? 1 : 0);
   const [downloading, setDownloading] = useState(false);
-  const [downloaded, setDownloaded] = useState(false);
+  const [downloaded, setDownloaded] = useState(isDownloaded);
 
   const handleDownload = async () => {
     try {
@@ -159,18 +163,25 @@ const JSON_URL =
 const index: React.FC = () => {
   const [data, setData] = React.useState<Data | null>(null);
   const [loading, setLoading] = React.useState(true);
+  // State per gestire le saghe e gli archi espansi
   // prettier-ignore
   const [expandedSagas, setExpandedSagas] = React.useState<Record<string, boolean>>({});
   // prettier-ignore
   const [expandedArcs, setExpandedArcs] = React.useState<Record<string, boolean>>({});
+  // Nuovo state per memorizzare gli id degli episodi scaricati (letti da AsyncStorage)
+  const [downloadedEpisodes, setDownloadedEpisodes] = useState<string[]>([]);
 
-  // useEffect to fetch data from the online JSON file
+  // useEffect per fare il fetch del JSON e leggere gli episodi scaricati
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(JSON_URL);
         const json = await response.json();
         setData(json);
+        // Legge la lista degli episodi scaricati da AsyncStorage
+        const storedData = await AsyncStorage.getItem("downloaded_episodes");
+        const downloaded: string[] = storedData ? JSON.parse(storedData) : [];
+        setDownloadedEpisodes(downloaded);
       } catch (error) {
         console.error("Error on loading the json:", error);
       } finally {
@@ -296,7 +307,12 @@ const index: React.FC = () => {
                               <EpisodeProgress episodeId={episodeData.id} />
                             </Pressable>
                             {/* right side of the episode: bottone download con percentuale */}
-                            <DownloadButton episodeId={episodeData.id} />
+                            <DownloadButton
+                              episodeId={episodeData.id}
+                              isDownloaded={downloadedEpisodes.includes(
+                                episodeData.id
+                              )}
+                            />
                           </View>
                         )}
                       />
