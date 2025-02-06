@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   Text,
   Pressable,
+  Alert,
 } from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -33,11 +34,12 @@ interface Episode {
   id: string;
 }
 
-// episode progress component that shows the progress of the single episode saved in AsyncStorage every time the user goes back to the episode list
-const EpisodeProgress: React.FC<{ episodeId: string }> = ({ episodeId }) => {
+const EpisodeProgress: React.FC<{ episodeId: string; refreshKey?: number }> = ({
+  episodeId,
+  refreshKey,
+}) => {
   const [progress, setProgress] = useState<number>(0);
   const [containerWidth, setContainerWidth] = useState(0);
-  const [episodeExists, setEpisodeExists] = useState<boolean>(false);
 
   // useFocusEffect to fetch the progress from AsyncStorage every time the user is on the episode list
   useFocusEffect(
@@ -56,7 +58,8 @@ const EpisodeProgress: React.FC<{ episodeId: string }> = ({ episodeId }) => {
         }
       };
       fetchProgress();
-    }, [episodeId])
+      console.log("Fetching progress for episode", episodeId);
+    }, [episodeId, refreshKey])
   );
 
   // return the progress bar with the progress saved in AsyncStorage
@@ -84,7 +87,7 @@ const DownloadButton: React.FC<{
 
   const handleDownload = async () => {
     try {
-      console.log("Download in corso...");
+      console.log("Downloading...");
       const downloadUrl = `https://pixeldrain.com/api/file/${episodeId}?download`;
       const directoryUri = FileSystem.documentDirectory + "downloaded_episodes";
       await FileSystem.makeDirectoryAsync(directoryUri, {
@@ -168,6 +171,42 @@ const index: React.FC = () => {
   // prettier-ignore
   const [expandedArcs, setExpandedArcs] = React.useState<Record<string, boolean>>({});
   const [downloadedEpisodes, setDownloadedEpisodes] = useState<string[]>([]);
+  const [refreshKey, setRefreshKey] = useState<number>(0); // <-- Stato aggiunto per forzare il refresh
+
+  // function to handle the long press on an episode
+  const handleEpisodeLongPress = (episodeId: string) => {
+    Alert.alert("Episode options", "Select an option:", [
+      {
+        text: "Set as Watched",
+        onPress: async () => {
+          try {
+            await AsyncStorage.setItem(
+              `progress_${episodeId}`,
+              JSON.stringify(100)
+            );
+            setRefreshKey((prev) => prev + 1);
+          } catch (error) {
+            console.error("Error setting as watched:", error);
+          }
+        },
+      },
+      {
+        text: "Clear Progress",
+        onPress: async () => {
+          try {
+            await AsyncStorage.removeItem(`progress_${episodeId}`);
+            setRefreshKey((prev) => prev + 1);
+          } catch (error) {
+            console.error("Error clearing progress:", error);
+          }
+        },
+      },
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+    ]);
+  };
 
   // useEffect to fetch the JSON data and the downloaded episodes from AsyncStorage
   React.useEffect(() => {
@@ -240,6 +279,7 @@ const index: React.FC = () => {
   return (
     <View style={styles.container}>
       <FlatList
+        style={{ width: "100%" }}
         // gets the sagas from the data object
         data={Object.entries(data)}
         // the key is the saga name
@@ -296,13 +336,19 @@ const index: React.FC = () => {
                                   params: { id: episodeData.id },
                                 });
                               }}
+                              onLongPress={() =>
+                                handleEpisodeLongPress(episodeData.id)
+                              }
                             >
                               {/* gets only the numbers of the episode name */}
                               <Text>
                                 Episode {episodeName.replace(/\D/g, "")}
                               </Text>
                               {/* shows the progress bar */}
-                              <EpisodeProgress episodeId={episodeData.id} />
+                              <EpisodeProgress
+                                episodeId={episodeData.id}
+                                refreshKey={refreshKey}
+                              />
                             </Pressable>
                             {/* right side of the episode */}
                             <DownloadButton
@@ -331,6 +377,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: "#f5f5f5",
+    alignItems: "center", // <-- Aggiunto per centrare la pagina
   },
   loader: {
     flex: 1,
