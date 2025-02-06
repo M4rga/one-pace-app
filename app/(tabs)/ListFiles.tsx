@@ -18,7 +18,6 @@ const Prova = () => {
       // Controllo se la cartella "downloaded_episodes" esiste
       const episodesInfo = await FileSystem.getInfoAsync(directoryUri2);
       setEsisteEpisodes(episodesInfo.exists);
-      console.log("EpisodesInfo:", esisteEpisodes);
 
       // Controllo se la cartella "RCTAsyncLocalStorage" esiste
       const asyncStorageInfo = await FileSystem.getInfoAsync(directoryUri3);

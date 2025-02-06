@@ -11,8 +11,10 @@ import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import * as Progress from "react-native-progress";
+import Feather from "@expo/vector-icons/Feather";
+import * as FileSystem from "expo-file-system"; // Nuova importazione necessaria
 
-// Define the types for the JSON
+// define the types for the JSON
 interface Data {
   [sagaName: string]: Saga;
 }
@@ -35,6 +37,7 @@ interface Episode {
 const EpisodeProgress: React.FC<{ episodeId: string }> = ({ episodeId }) => {
   const [progress, setProgress] = useState<number>(0);
   const [containerWidth, setContainerWidth] = useState(0);
+  const [episodeExists, setEpisodeExists] = useState<boolean>(false);
 
   // useFocusEffect to fetch the progress from AsyncStorage every time the user is on the episode list
   useFocusEffect(
@@ -67,6 +70,86 @@ const EpisodeProgress: React.FC<{ episodeId: string }> = ({ episodeId }) => {
     >
       <Progress.Bar progress={progress / 100} width={containerWidth} />
     </View>
+  );
+};
+
+// download button component that downloads the episode and saves it in the FileSystem and AsyncStorage
+const DownloadButton: React.FC<{ episodeId: string }> = ({ episodeId }) => {
+  const [progress, setProgress] = useState(0);
+  const [downloading, setDownloading] = useState(false);
+  const [downloaded, setDownloaded] = useState(false);
+
+  const handleDownload = async () => {
+    try {
+      console.log("Download in corso...");
+      const downloadUrl = `https://pixeldrain.com/api/file/${episodeId}?download`;
+      const directoryUri = FileSystem.documentDirectory + "downloaded_episodes";
+      await FileSystem.makeDirectoryAsync(directoryUri, {
+        intermediates: true,
+      });
+      // prettier-ignore
+      const fileUri = FileSystem.documentDirectory + `downloaded_episodes/${episodeId}`;
+      const callback = (downloadProgress: FileSystem.DownloadProgressData) => {
+        const progressRatio =
+          downloadProgress.totalBytesWritten /
+          downloadProgress.totalBytesExpectedToWrite;
+        setProgress(progressRatio);
+      };
+
+      setDownloading(true);
+      const downloadResumable = FileSystem.createDownloadResumable(
+        downloadUrl,
+        fileUri,
+        {},
+        callback
+      );
+      const result = await downloadResumable.downloadAsync();
+
+      if (result && result.uri) {
+        // Recupera la lista di episodi scaricati da AsyncStorage
+        const storedData = await AsyncStorage.getItem("downloaded_episodes");
+        let downloadedEpisodes: string[] = storedData
+          ? JSON.parse(storedData)
+          : [];
+
+        // Se l'episodio non è già nella lista, lo aggiunge
+        if (!downloadedEpisodes.includes(episodeId)) {
+          downloadedEpisodes.push(episodeId);
+          await AsyncStorage.setItem(
+            "downloaded_episodes",
+            JSON.stringify(downloadedEpisodes)
+          );
+        }
+
+        setDownloaded(true);
+        console.log("Download completato:", result.uri);
+      } else {
+        console.warn("Download interrotto o non riuscito");
+      }
+    } catch (error) {
+      console.error("Download fallito:", error);
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  return (
+    <Pressable onPress={handleDownload} disabled={downloading || downloaded}>
+      <Progress.Circle
+        progress={downloading || downloaded ? progress : 0}
+        size={40}
+        showsText={true}
+        formatText={() =>
+          downloading ? (
+            <Feather name="pause" size={20} />
+          ) : downloaded ? (
+            <Feather name="check" size={20} />
+          ) : (
+            <Feather name="download-cloud" size={20} />
+          )
+        }
+      />
+    </Pressable>
   );
 };
 
@@ -194,22 +277,27 @@ const index: React.FC = () => {
                         // for each episode name
                         renderItem={({ item: [episodeName, episodeData] }) => (
                           // Episode
-                          <Pressable
-                            style={styles.episodeItem}
-                            onPress={() => {
-                              router.push({
-                                pathname: "../otherPages/video",
-                                params: { id: episodeData.id },
-                              });
-                            }}
-                          >
-                            {/* gets only the numbers of the episode name */}
-                            <Text>
-                              Episode {episodeName.replace(/\D/g, "")}
-                            </Text>
-                            {/* shows the progress bar */}
-                            <EpisodeProgress episodeId={episodeData.id} />
-                          </Pressable>
+                          <View style={styles.episodeItem}>
+                            {/* left side of the episode */}
+                            <Pressable
+                              style={{ flex: 1, paddingRight: 10 }}
+                              onPress={() => {
+                                router.push({
+                                  pathname: "../otherPages/video",
+                                  params: { id: episodeData.id },
+                                });
+                              }}
+                            >
+                              {/* gets only the numbers of the episode name */}
+                              <Text>
+                                Episode {episodeName.replace(/\D/g, "")}
+                              </Text>
+                              {/* shows the progress bar */}
+                              <EpisodeProgress episodeId={episodeData.id} />
+                            </Pressable>
+                            {/* right side of the episode: bottone download con percentuale */}
+                            <DownloadButton episodeId={episodeData.id} />
+                          </View>
                         )}
                       />
                     )}
@@ -262,6 +350,8 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginBottom: 5,
     borderRadius: 5,
+    flexDirection: "row",
+    alignItems: "center",
   },
   progressText: {
     fontSize: 12,
