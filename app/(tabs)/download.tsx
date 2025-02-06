@@ -3,16 +3,18 @@ import { View, StyleSheet, Alert, Pressable } from "react-native";
 import * as Progress from "react-native-progress";
 import * as FileSystem from "expo-file-system";
 import Feather from "@expo/vector-icons/Feather";
+import { useFocusEffect } from "@react-navigation/native";
 
 const About: React.FC = () => {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
+  const [esisteEpisodes, setEsisteEpisodes] = useState<boolean>(false);
   const episodeId = "7m6KDEuw";
+  // prettier-ignore
+  const destinationUri = FileSystem.documentDirectory + `downloaded_episodes/${episodeId}.mp4`;
 
   const downloadFile = async () => {
     const url = `https://pixeldrain.com/api/file/${episodeId}?download`;
-    const destinationUri =
-      FileSystem.documentDirectory + `downloaded_episodes/${episodeId}.mp4`;
 
     // Crea la cartella "downloaded_episodes" se non esiste
     const directoryUri = FileSystem.documentDirectory + "downloaded_episodes";
@@ -48,6 +50,7 @@ const About: React.FC = () => {
           `Il file è stato salvato in:\n${result.uri}`
         );
         console.log("Download completato:", result.uri);
+        fetchProgress();
       } else {
         Alert.alert("Errore", "Download non riuscito.");
       }
@@ -60,6 +63,18 @@ const About: React.FC = () => {
     }
   };
 
+  const fetchProgress = async () => {
+    const episodesInfo = await FileSystem.getInfoAsync(destinationUri);
+    setEsisteEpisodes(episodesInfo.exists);
+    console.log("EpisodesInfo:", episodesInfo.exists);
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchProgress();
+    }, [episodeId])
+  );
+
   return (
     <View style={styles.container}>
       <Pressable onPress={downloadFile} disabled={isDownloading}>
@@ -70,6 +85,8 @@ const About: React.FC = () => {
           formatText={() =>
             isDownloading ? (
               <Feather name="pause" size={24} color="black" />
+            ) : esisteEpisodes ? (
+              <Feather name="check" size={24} color="black" />
             ) : (
               <Feather name="download-cloud" size={24} color="black" />
             )
