@@ -13,7 +13,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import * as Progress from "react-native-progress";
 import Feather from "@expo/vector-icons/Feather";
-import * as FileSystem from "expo-file-system"; // Nuova importazione necessaria
+import * as FileSystem from "expo-file-system";
+import * as Haptics from "expo-haptics";
 
 // define the types for the JSON
 interface Data {
@@ -58,7 +59,6 @@ const EpisodeProgress: React.FC<{ episodeId: string; refreshKey?: number }> = ({
         }
       };
       fetchProgress();
-      console.log("Fetching progress for episode", episodeId);
     }, [episodeId, refreshKey])
   );
 
@@ -128,12 +128,12 @@ const DownloadButton: React.FC<{
         }
 
         setDownloaded(true);
-        console.log("Download completato:", result.uri);
+        console.log("Download completed");
       } else {
-        console.warn("Download interrotto o non riuscito");
+        console.warn("Download failed");
       }
     } catch (error) {
-      console.error("Download fallito:", error);
+      console.error("Download failed:", error);
     } finally {
       setDownloading(false);
     }
@@ -175,7 +175,8 @@ const index: React.FC = () => {
 
   // function to handle the long press on an episode
   const handleEpisodeLongPress = (episodeId: string) => {
-    Alert.alert("Episode options", "Select an option:", [
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    Alert.alert("Episode options", "", [
       {
         text: "Set as Watched",
         onPress: async () => {
