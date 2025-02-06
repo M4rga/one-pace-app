@@ -74,7 +74,6 @@ const EpisodeProgress: React.FC<{ episodeId: string }> = ({ episodeId }) => {
 };
 
 // download button component that downloads the episode and saves it in the FileSystem and AsyncStorage
-// Aggiunta la prop isDownloaded per far sapere al componente se l'episodio risulta già scaricato
 const DownloadButton: React.FC<{
   episodeId: string;
   isDownloaded: boolean;
@@ -110,13 +109,13 @@ const DownloadButton: React.FC<{
       const result = await downloadResumable.downloadAsync();
 
       if (result && result.uri) {
-        // Recupera la lista di episodi scaricati da AsyncStorage
+        // gets the list of downloaded episodes from AsyncStorage
         const storedData = await AsyncStorage.getItem("downloaded_episodes");
         let downloadedEpisodes: string[] = storedData
           ? JSON.parse(storedData)
           : [];
 
-        // Se l'episodio non è già nella lista, lo aggiunge
+        // if the episode is not in the list, add it
         if (!downloadedEpisodes.includes(episodeId)) {
           downloadedEpisodes.push(episodeId);
           await AsyncStorage.setItem(
@@ -138,6 +137,7 @@ const DownloadButton: React.FC<{
   };
 
   return (
+    // return the download button with the progress bar
     <Pressable onPress={handleDownload} disabled={downloading || downloaded}>
       <Progress.Circle
         progress={downloading || downloaded ? progress : 0}
@@ -163,22 +163,20 @@ const JSON_URL =
 const index: React.FC = () => {
   const [data, setData] = React.useState<Data | null>(null);
   const [loading, setLoading] = React.useState(true);
-  // State per gestire le saghe e gli archi espansi
   // prettier-ignore
   const [expandedSagas, setExpandedSagas] = React.useState<Record<string, boolean>>({});
   // prettier-ignore
   const [expandedArcs, setExpandedArcs] = React.useState<Record<string, boolean>>({});
-  // Nuovo state per memorizzare gli id degli episodi scaricati (letti da AsyncStorage)
   const [downloadedEpisodes, setDownloadedEpisodes] = useState<string[]>([]);
 
-  // useEffect per fare il fetch del JSON e leggere gli episodi scaricati
+  // useEffect to fetch the JSON data and the downloaded episodes from AsyncStorage
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(JSON_URL);
         const json = await response.json();
         setData(json);
-        // Legge la lista degli episodi scaricati da AsyncStorage
+        // gets the list of downloaded episodes from AsyncStorage
         const storedData = await AsyncStorage.getItem("downloaded_episodes");
         const downloaded: string[] = storedData ? JSON.parse(storedData) : [];
         setDownloadedEpisodes(downloaded);
@@ -306,7 +304,7 @@ const index: React.FC = () => {
                               {/* shows the progress bar */}
                               <EpisodeProgress episodeId={episodeData.id} />
                             </Pressable>
-                            {/* right side of the episode: bottone download con percentuale */}
+                            {/* right side of the episode */}
                             <DownloadButton
                               episodeId={episodeData.id}
                               isDownloaded={downloadedEpisodes.includes(
