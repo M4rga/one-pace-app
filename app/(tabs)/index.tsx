@@ -78,7 +78,12 @@ const EpisodeProgress: React.FC<{ episodeId: string; refreshKey?: number }> = ({
 
 // download button component that downloads the episode and saves it in the FileSystem and AsyncStorage
 // prettier-ignore
-const DownloadButton: React.FC<{ episodeId: string; isDownloaded: boolean; onDownloadComplete?: () => void; }> = ({ episodeId, isDownloaded, onDownloadComplete }) => {
+const DownloadButton: React.FC<{ 
+  episodeId: string; 
+  isDownloaded: boolean; 
+  onDownloadComplete?: () => void; 
+  onStatusChange?: (episodeId: string, status: "idle" | "downloading" | "paused" | "downloaded") => void; 
+}> = ({ episodeId, isDownloaded, onDownloadComplete, onStatusChange }) => {
   const [progress, setProgress] = useState(isDownloaded ? 1 : 0);
   const [downloading, setDownloading] = useState(false);
   const [downloaded, setDownloaded] = useState(isDownloaded);
@@ -94,6 +99,7 @@ const DownloadButton: React.FC<{ episodeId: string; isDownloaded: boolean; onDow
         try {
           await downloadResumableRef.current.pauseAsync();
           setPaused(true);
+          if(onStatusChange){ onStatusChange(episodeId, "paused") }
           setDownloading(false);
         } catch (error) {
           console.error("Failed to pause download:", error);
@@ -107,6 +113,7 @@ const DownloadButton: React.FC<{ episodeId: string; isDownloaded: boolean; onDow
       if (downloadResumableRef.current) {
         try {
           setDownloading(true);
+          if(onStatusChange){ onStatusChange(episodeId, "downloading") }
           setPaused(false);
           const result = await downloadResumableRef.current.resumeAsync();
           if (result && result.uri) {
@@ -126,6 +133,7 @@ const DownloadButton: React.FC<{ episodeId: string; isDownloaded: boolean; onDow
             setDownloaded(true);
             console.log("Download completed");
             if(onDownloadComplete){ onDownloadComplete() }
+            if(onStatusChange){ onStatusChange(episodeId, "downloaded") }
           }
         } catch (error) {
           console.error("Failed to resume download:", error);
@@ -154,6 +162,7 @@ const DownloadButton: React.FC<{ episodeId: string; isDownloaded: boolean; onDow
       };
 
       setDownloading(true);
+      if(onStatusChange){ onStatusChange(episodeId, "downloading") }
       const downloadResumable = FileSystem.createDownloadResumable(
         downloadUrl,
         fileUri,
@@ -182,6 +191,7 @@ const DownloadButton: React.FC<{ episodeId: string; isDownloaded: boolean; onDow
         setDownloaded(true);
         console.log("Download completed");
         if(onDownloadComplete){ onDownloadComplete() }
+        if(onStatusChange){ onStatusChange(episodeId, "downloaded") }
       }
     } catch (error) {
       console.error("Download failed:", error);
@@ -225,6 +235,9 @@ const index: React.FC = () => {
   const [expandedArcs, setExpandedArcs] = React.useState<Record<string, boolean>>({});
   const [downloadedEpisodes, setDownloadedEpisodes] = useState<string[]>([]);
   const [refreshKey, setRefreshKey] = useState<number>(0); // <-- Stato aggiunto per forzare il refresh
+  const [downloadStatuses, setDownloadStatuses] = useState<
+    Record<string, "idle" | "downloading" | "paused" | "downloaded">
+  >({});
 
   // function to handle the long press on an episode
   const handleEpisodeLongPress = (episodeId: string) => {
@@ -267,6 +280,18 @@ const index: React.FC = () => {
       },
     ];
 
+    // add the "Stop Download" button if the episode is downloading or paused
+    // prettier-ignore
+    if (downloadStatuses[episodeId] === "downloading" || downloadStatuses[episodeId] === "paused") {
+      buttons.push({
+        text: "Stop Download",
+        onPress: () => {
+          console.log("Stop download pressed for episode", episodeId);
+        },
+        style: "destructive",
+      });
+    }
+
     // add the "Delete Download" button if the episode is downloaded
     if (downloadedEpisodes.includes(episodeId)) {
       buttons.push({
@@ -274,6 +299,7 @@ const index: React.FC = () => {
         onPress: () => {
           console.log("Delete download pressed for episode", episodeId);
         },
+        style: "destructive",
       });
     }
 
@@ -437,6 +463,12 @@ const index: React.FC = () => {
                                 episodeData.id
                               )}
                               onDownloadComplete={fetchData}
+                              onStatusChange={(id, status) =>
+                                setDownloadStatuses((prev) => ({
+                                  ...prev,
+                                  [id]: status,
+                                }))
+                              }
                             />
                           </View>
                         )}
