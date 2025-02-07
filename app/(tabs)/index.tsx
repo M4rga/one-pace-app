@@ -94,7 +94,7 @@ const DownloadButton: React.FC<{
         intermediates: true,
       });
       // prettier-ignore
-      const fileUri = FileSystem.documentDirectory + `downloaded_episodes/${episodeId}`;
+      const fileUri = FileSystem.documentDirectory + `downloaded_episodes/${episodeId}.mp4`;
       const callback = (downloadProgress: FileSystem.DownloadProgressData) => {
         const progressRatio =
           downloadProgress.totalBytesWritten /

@@ -9,8 +9,6 @@ import {
 } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FileSystem from "expo-file-system";
-import Toast, { BaseToast } from "react-native-toast-message";
-import Ionicons from "@expo/vector-icons/Ionicons";
 
 const VideoPlayer = () => {
   const router = useRouter();
@@ -18,6 +16,8 @@ const VideoPlayer = () => {
   const params = useLocalSearchParams();
   const { id = null } = params;
   const [silentMode, setSilentMode] = useState<boolean>(false);
+  const defaultUri = `null`;
+  const [videoUri, setVideoUri] = useState<string>(defaultUri);
 
   // useEffect to load the settings switch states from AsyncStorage
   useEffect(() => {
@@ -117,19 +117,39 @@ const VideoPlayer = () => {
     }
   };
 
+  useEffect(() => {
+    const checkFileExists = async () => {
+      const localUri = `${FileSystem.documentDirectory}downloaded_episodes/${id}.mp4`;
+      const fileInfo = await FileSystem.getInfoAsync(localUri);
+
+      if (fileInfo.exists) {
+        console.log("✅ File locale trovato:", localUri);
+        setVideoUri(localUri);
+      } else {
+        console.log("🌐 File non trovato, uso URL remoto.");
+        setVideoUri(`https://pixeldrain.com/api/file/${id}`);
+      }
+    };
+
+    checkFileExists();
+  }, [id]);
+
   return (
     <View style={styles.container}>
-      <Video
-        ref={videoRef}
-        source={{ uri: `https://pixeldrain.com/api/file/${id}` }}
-        useNativeControls={true}
-        shouldPlay={true}
-        onLoad={handleVideoLoad}
-        onFullscreenUpdate={handleFullscreenUpdate}
-        onError={handleVideoError}
-        onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
-      />
-      <ActivityIndicator size="small" color="black" />
+      {videoUri === defaultUri ? (
+        <ActivityIndicator size="small" color="black" />
+      ) : (
+        <Video
+          ref={videoRef}
+          source={{ uri: videoUri }}
+          useNativeControls={true}
+          shouldPlay={true}
+          onLoad={handleVideoLoad}
+          onFullscreenUpdate={handleFullscreenUpdate}
+          onError={handleVideoError}
+          onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+        />
+      )}
     </View>
   );
 };
