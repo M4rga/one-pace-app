@@ -47,21 +47,21 @@ const VideoPlayer = () => {
     configureAudio();
   }, [silentMode]);
 
-  // Function to enter fullscreen mode on load
+  // function to enter fullscreen mode on load
   const handleEnterFullscreen = () => {
     if (videoRef.current) {
       videoRef.current.presentFullscreenPlayer();
     }
   };
 
-  // Function to go back to episode list on exit fullscreen
+  // function to go back to episode list on exit fullscreen
   const handleFullscreenUpdate = (status: VideoFullscreenUpdateEvent) => {
     if (status.fullscreenUpdate === 3) {
       router.back();
     }
   };
 
-  // Function to handle video error
+  // function to handle video error
   const handleVideoError = () => {
     Alert.alert(
       "Error",
@@ -78,7 +78,7 @@ const VideoPlayer = () => {
     );
   };
 
-  // Function to handle video load
+  // function to handle video load
   const handleVideoLoad = async (status: AVPlaybackStatus) => {
     if (!status.isLoaded) return;
     handleEnterFullscreen();
@@ -100,7 +100,7 @@ const VideoPlayer = () => {
     }
   };
 
-  // Function to handle the progress of the video it gets the current position of the video in milliseconds and saves it as percentage in AsyncStorage
+  // function to handle the progress of the video it gets the current position of the video in milliseconds and saves it as percentage in AsyncStorage
   const handlePlaybackStatusUpdate = async (status: any) => {
     if (status.isLoaded && status.durationMillis) {
       const progressPercentage =
@@ -117,16 +117,17 @@ const VideoPlayer = () => {
     }
   };
 
+  // useEffect to check if the video is downloaded or not
   useEffect(() => {
     const checkFileExists = async () => {
       const localUri = `${FileSystem.documentDirectory}downloaded_episodes/${id}.mp4`;
       const fileInfo = await FileSystem.getInfoAsync(localUri);
 
       if (fileInfo.exists) {
-        console.log("✅ File locale trovato:", localUri);
+        console.log("Offline");
         setVideoUri(localUri);
       } else {
-        console.log("🌐 File non trovato, uso URL remoto.");
+        console.log("Online");
         setVideoUri(`https://pixeldrain.com/api/file/${id}`);
       }
     };

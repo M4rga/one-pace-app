@@ -77,17 +77,67 @@ const EpisodeProgress: React.FC<{ episodeId: string; refreshKey?: number }> = ({
 };
 
 // download button component that downloads the episode and saves it in the FileSystem and AsyncStorage
-const DownloadButton: React.FC<{
-  episodeId: string;
-  isDownloaded: boolean;
-}> = ({ episodeId, isDownloaded }) => {
+// prettier-ignore
+const DownloadButton: React.FC<{ episodeId: string; isDownloaded: boolean;}> = ({ episodeId, isDownloaded }) => {
   const [progress, setProgress] = useState(isDownloaded ? 1 : 0);
   const [downloading, setDownloading] = useState(false);
   const [downloaded, setDownloaded] = useState(isDownloaded);
-
+  const [paused, setPaused] = useState(false);
+  // prettier-ignore
+  const downloadResumableRef = React.useRef<FileSystem.DownloadResumable | null>(null);
   const handleDownload = async () => {
+    if (downloaded) return;
+
+    // if the download is in progress, pause it
+    if (downloading) {
+      if (downloadResumableRef.current) {
+        try {
+          await downloadResumableRef.current.pauseAsync();
+          setPaused(true);
+          setDownloading(false);
+        } catch (error) {
+          console.error("Failed to pause download:", error);
+        }
+      }
+      return;
+    }
+
+    // if the download is paused, resume it
+    if (paused) {
+      if (downloadResumableRef.current) {
+        try {
+          setDownloading(true);
+          setPaused(false);
+          const result = await downloadResumableRef.current.resumeAsync();
+          if (result && result.uri) {
+            const storedData = await AsyncStorage.getItem(
+              "downloaded_episodes"
+            );
+            let downloadedEpisodes: string[] = storedData
+              ? JSON.parse(storedData)
+              : [];
+            if (!downloadedEpisodes.includes(episodeId)) {
+              downloadedEpisodes.push(episodeId);
+              await AsyncStorage.setItem(
+                "downloaded_episodes",
+                JSON.stringify(downloadedEpisodes)
+              );
+            }
+            setDownloaded(true);
+            console.log("Download completed");
+          }
+        } catch (error) {
+          console.error("Failed to resume download:", error);
+        } finally {
+          setDownloading(false);
+        }
+      }
+      return;
+    }
+
+    // if the download is not started, start it
     try {
-      console.log("Downloading...");
+      console.log("Download started");
       const downloadUrl = `https://pixeldrain.com/api/file/${episodeId}?download`;
       const directoryUri = FileSystem.documentDirectory + "downloaded_episodes";
       await FileSystem.makeDirectoryAsync(directoryUri, {
@@ -109,6 +159,7 @@ const DownloadButton: React.FC<{
         {},
         callback
       );
+      downloadResumableRef.current = downloadResumable;
       const result = await downloadResumable.downloadAsync();
 
       if (result && result.uri) {
@@ -129,8 +180,6 @@ const DownloadButton: React.FC<{
 
         setDownloaded(true);
         console.log("Download completed");
-      } else {
-        console.warn("Download failed");
       }
     } catch (error) {
       console.error("Download failed:", error);
@@ -140,15 +189,17 @@ const DownloadButton: React.FC<{
   };
 
   return (
-    // return the download button with the progress bar
-    <Pressable onPress={handleDownload} disabled={downloading || downloaded}>
+    // the button is a progress circle that shows the download progress and it is disabled if the episode is already downloaded
+    <Pressable onPress={handleDownload} disabled={downloaded}>
       <Progress.Circle
-        progress={downloading || downloaded ? progress : 0}
+        progress={downloading || paused || downloaded ? progress : 0}
         size={40}
         showsText={true}
         formatText={() =>
           downloading ? (
             <Feather name="pause" size={20} />
+          ) : paused ? (
+            <Feather name="play" size={20} />
           ) : downloaded ? (
             <Feather name="check" size={20} />
           ) : (
@@ -378,7 +429,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: "#f5f5f5",
-    alignItems: "center", // <-- Aggiunto per centrare la pagina
+    alignItems: "center",
   },
   loader: {
     flex: 1,
