@@ -78,7 +78,7 @@ const EpisodeProgress: React.FC<{ episodeId: string; refreshKey?: number }> = ({
 
 // download button component that downloads the episode and saves it in the FileSystem and AsyncStorage
 // prettier-ignore
-const DownloadButton: React.FC<{ episodeId: string; isDownloaded: boolean;}> = ({ episodeId, isDownloaded }) => {
+const DownloadButton: React.FC<{ episodeId: string; isDownloaded: boolean; onDownloadComplete?: () => void; }> = ({ episodeId, isDownloaded, onDownloadComplete }) => {
   const [progress, setProgress] = useState(isDownloaded ? 1 : 0);
   const [downloading, setDownloading] = useState(false);
   const [downloaded, setDownloaded] = useState(isDownloaded);
@@ -125,6 +125,7 @@ const DownloadButton: React.FC<{ episodeId: string; isDownloaded: boolean;}> = (
             }
             setDownloaded(true);
             console.log("Download completed");
+            if(onDownloadComplete){ onDownloadComplete() }
           }
         } catch (error) {
           console.error("Failed to resume download:", error);
@@ -180,6 +181,7 @@ const DownloadButton: React.FC<{ episodeId: string; isDownloaded: boolean;}> = (
 
         setDownloaded(true);
         console.log("Download completed");
+        if(onDownloadComplete){ onDownloadComplete() }
       }
     } catch (error) {
       console.error("Download failed:", error);
@@ -227,56 +229,82 @@ const index: React.FC = () => {
   // function to handle the long press on an episode
   const handleEpisodeLongPress = (episodeId: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    Alert.alert("Episode options", "", [
+    // create the buttons for the alert
+    const buttons: {
+      text: string;
+      onPress: () => void;
+      style?: "default" | "cancel" | "destructive";
+    }[] = [
       {
         text: "Set as Watched",
-        onPress: async () => {
-          try {
-            await AsyncStorage.setItem(
-              `progress_${episodeId}`,
-              JSON.stringify(100)
-            );
-            setRefreshKey((prev) => prev + 1);
-          } catch (error) {
-            console.error("Error setting as watched:", error);
-          }
+        onPress: () => {
+          // Avvio subito una funzione asincrona ma onPress restituisce void
+          (async () => {
+            try {
+              await AsyncStorage.setItem(
+                `progress_${episodeId}`,
+                JSON.stringify(100)
+              );
+              setRefreshKey((prev) => prev + 1);
+            } catch (error) {
+              console.error("Error setting as watched:", error);
+            }
+          })();
         },
       },
       {
         text: "Clear Progress",
-        onPress: async () => {
-          try {
-            await AsyncStorage.removeItem(`progress_${episodeId}`);
-            setRefreshKey((prev) => prev + 1);
-          } catch (error) {
-            console.error("Error clearing progress:", error);
-          }
+        onPress: () => {
+          (async () => {
+            try {
+              await AsyncStorage.removeItem(`progress_${episodeId}`);
+              setRefreshKey((prev) => prev + 1);
+            } catch (error) {
+              console.error("Error clearing progress:", error);
+            }
+          })();
         },
       },
-      {
-        text: "Cancel",
-        style: "cancel",
-      },
-    ]);
+    ];
+
+    // add the "Delete Download" button if the episode is downloaded
+    if (downloadedEpisodes.includes(episodeId)) {
+      buttons.push({
+        text: "Delete Download",
+        onPress: () => {
+          console.log("Delete download pressed for episode", episodeId);
+        },
+      });
+    }
+
+    // add the "Cancel" button
+    buttons.push({
+      text: "Cancel",
+      style: "cancel",
+      onPress: () => {},
+    });
+
+    Alert.alert("Episode options", "", buttons);
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(JSON_URL);
+      const json = await response.json();
+      setData(json);
+      // gets the list of downloaded episodes from AsyncStorage
+      const storedData = await AsyncStorage.getItem("downloaded_episodes");
+      const downloaded: string[] = storedData ? JSON.parse(storedData) : [];
+      setDownloadedEpisodes(downloaded);
+    } catch (error) {
+      console.error("Error on loading the json:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // useEffect to fetch the JSON data and the downloaded episodes from AsyncStorage
   React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(JSON_URL);
-        const json = await response.json();
-        setData(json);
-        // gets the list of downloaded episodes from AsyncStorage
-        const storedData = await AsyncStorage.getItem("downloaded_episodes");
-        const downloaded: string[] = storedData ? JSON.parse(storedData) : [];
-        setDownloadedEpisodes(downloaded);
-      } catch (error) {
-        console.error("Error on loading the json:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchData();
   }, []);
 
@@ -408,6 +436,7 @@ const index: React.FC = () => {
                               isDownloaded={downloadedEpisodes.includes(
                                 episodeData.id
                               )}
+                              onDownloadComplete={fetchData}
                             />
                           </View>
                         )}
