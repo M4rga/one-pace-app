@@ -13,7 +13,7 @@ const Settings = () => {
         const savedStates = await AsyncStorage.getItem("switchStates");
         // saves to savedStates every switchState
         if (savedStates) {
-          setSwitchStates(JSON.parse(savedStates)); // Imposta lo stato salvato
+          setSwitchStates(JSON.parse(savedStates));
         }
       } catch (error) {
         console.error("Error on loading states:", error);

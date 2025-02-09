@@ -234,7 +234,7 @@ const index: React.FC = () => {
   // prettier-ignore
   const [expandedArcs, setExpandedArcs] = React.useState<Record<string, boolean>>({});
   const [downloadedEpisodes, setDownloadedEpisodes] = useState<string[]>([]);
-  const [refreshKey, setRefreshKey] = useState<number>(0); // <-- Stato aggiunto per forzare il refresh
+  const [refreshKey, setRefreshKey] = useState<number>(0);
   const [downloadStatuses, setDownloadStatuses] = useState<
     Record<string, "idle" | "downloading" | "paused" | "downloaded">
   >({});
@@ -251,7 +251,6 @@ const index: React.FC = () => {
       {
         text: "Set as Watched",
         onPress: () => {
-          // Avvio subito una funzione asincrona ma onPress restituisce void
           (async () => {
             try {
               await AsyncStorage.setItem(

@@ -9,7 +9,7 @@ const index = () => {
       style={{ flex: 1 }}
     >
       <Image
-        source={require("../assets/images/scritta.png")}
+        source={require("../assets/images/title.png")}
         style={styles.scritta}
       />
       <Link href={"/(tabs)"} replace style={styles.link}></Link>
