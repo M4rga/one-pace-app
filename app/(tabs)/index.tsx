@@ -225,6 +225,7 @@ const DownloadButton: React.FC<{
 
 const JSON_URL =
   "https://raw.githubusercontent.com/M4rga/one-pace-app/main/assets/others/episodes.json";
+const LOCAL_JSON_PATH = FileSystem.documentDirectory + "episodes.json";
 
 const index: React.FC = () => {
   const [data, setData] = React.useState<Data | null>(null);
@@ -317,13 +318,37 @@ const index: React.FC = () => {
       const response = await fetch(JSON_URL);
       const json = await response.json();
       setData(json);
+      // saves the JSON locally
+      await FileSystem.writeAsStringAsync(
+        LOCAL_JSON_PATH,
+        JSON.stringify(json)
+      );
       // gets the list of downloaded episodes from AsyncStorage
       const storedData = await AsyncStorage.getItem("downloaded_episodes");
       const downloaded: string[] = storedData ? JSON.parse(storedData) : [];
       setDownloadedEpisodes(downloaded);
     } catch (error) {
       console.error("Error on loading the json:", error);
+      // if the JSON couldn't be fetched, try to load it from the local file
+      try {
+        const fileInfo = await FileSystem.getInfoAsync(LOCAL_JSON_PATH);
+        if (fileInfo.exists) {
+          const fileContent = await FileSystem.readAsStringAsync(
+            LOCAL_JSON_PATH
+          );
+          const json = JSON.parse(fileContent);
+          setData(json);
+        } else {
+          console.error("Local JSON file not found");
+        }
+      } catch (localError) {
+        console.error("Error loading local JSON file:", localError);
+      }
     } finally {
+      // gets the list of downloaded episodes from AsyncStorage always
+      const storedData = await AsyncStorage.getItem("downloaded_episodes");
+      const downloaded: string[] = storedData ? JSON.parse(storedData) : [];
+      setDownloadedEpisodes(downloaded);
       setLoading(false);
     }
   };
