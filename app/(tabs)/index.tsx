@@ -82,14 +82,30 @@ const DownloadButton: React.FC<{
   episodeId: string; 
   isDownloaded: boolean; 
   onDownloadComplete?: () => void; 
-  onStatusChange?: (episodeId: string, status: "idle" | "downloading" | "paused" | "downloaded") => void; 
-}> = ({ episodeId, isDownloaded, onDownloadComplete, onStatusChange }) => {
+  onStatusChange?: (episodeId: string, status: "idle" | "downloading" | "paused" | "downloaded") => void;
+  externalProgress?: number;
+}> = ({ episodeId, isDownloaded, onDownloadComplete, onStatusChange, externalProgress }) => {
   const [progress, setProgress] = useState(isDownloaded ? 1 : 0);
   const [downloading, setDownloading] = useState(false);
   const [downloaded, setDownloaded] = useState(isDownloaded);
   const [paused, setPaused] = useState(false);
   // prettier-ignore
   const downloadResumableRef = React.useRef<FileSystem.DownloadResumable | null>(null);
+  React.useEffect(() => {
+    if (externalProgress !== undefined) {
+      setProgress(externalProgress);
+    }
+  }, [externalProgress]);
+
+  // reset the download status if the episode is already downloaded
+  React.useEffect(() => {
+    if (!isDownloaded) {
+      setDownloaded(false);
+      setDownloading(false);
+      setProgress(0);
+    }
+  }, [isDownloaded]);
+
   const handleDownload = async () => {
     if (downloaded) return;
 
@@ -239,6 +255,9 @@ const index: React.FC = () => {
   const [downloadStatuses, setDownloadStatuses] = useState<
     Record<string, "idle" | "downloading" | "paused" | "downloaded">
   >({});
+  const [downloadProgresses, setDownloadProgresses] = useState<
+    Record<string, number>
+  >({});
 
   // function to handle the long press on an episode
   const handleEpisodeLongPress = (episodeId: string) => {
@@ -298,6 +317,31 @@ const index: React.FC = () => {
         text: "Delete Download",
         onPress: () => {
           console.log("Delete download pressed for episode", episodeId);
+          (async () => {
+            // delete the file from the FileSystem
+            const fileUri =
+              FileSystem.documentDirectory +
+              `downloaded_episodes/${episodeId}.mp4`;
+            try {
+              await FileSystem.deleteAsync(fileUri, { idempotent: true });
+            } catch (error) {
+              console.error("Error deleting file:", error);
+            }
+            // remove the episode from the downloaded episodes list in AsyncStorage
+            const storedData = await AsyncStorage.getItem(
+              "downloaded_episodes"
+            );
+            let downloaded: string[] = storedData ? JSON.parse(storedData) : [];
+            downloaded = downloaded.filter((id) => id !== episodeId);
+            await AsyncStorage.setItem(
+              "downloaded_episodes",
+              JSON.stringify(downloaded)
+            );
+            // updates the download circle
+            setDownloadProgresses((prev) => ({ ...prev, [episodeId]: 0 }));
+            setDownloadedEpisodes(downloaded);
+            setDownloadStatuses((prev) => ({ ...prev, [episodeId]: "idle" }));
+          })();
         },
         style: "destructive",
       });
@@ -486,6 +530,9 @@ const index: React.FC = () => {
                               isDownloaded={downloadedEpisodes.includes(
                                 episodeData.id
                               )}
+                              externalProgress={
+                                downloadProgresses[episodeData.id]
+                              }
                               onDownloadComplete={fetchData}
                               onStatusChange={(id, status) =>
                                 setDownloadStatuses((prev) => ({
