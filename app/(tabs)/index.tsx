@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useImperativeHandle } from "react";
 import {
   View,
   StyleSheet,
@@ -78,22 +78,37 @@ const EpisodeProgress: React.FC<{ episodeId: string; refreshKey?: number }> = ({
 
 // download button component that downloads the episode and saves it in the FileSystem and AsyncStorage
 // prettier-ignore
-const DownloadButton: React.FC<{ 
-  episodeId: string; 
-  isDownloaded: boolean; 
-  onDownloadComplete?: () => void; 
-  onStatusChange?: (episodeId: string, status: "idle" | "downloading" | "paused" | "downloaded") => void;
-  externalProgress?: number;
-}> = ({ episodeId, isDownloaded, onDownloadComplete, onStatusChange, externalProgress }) => {
+const DownloadButton = React.forwardRef<
+  { stopDownload: () => Promise<void> },
+  {
+    episodeId: string;
+    isDownloaded: boolean;
+    onDownloadComplete?: () => void;
+    onStatusChange?: (
+      episodeId: string,
+      status: "idle" | "downloading" | "paused" | "downloaded"
+    ) => void;
+    externalProgress?: number;
+  }
+>(({ episodeId, isDownloaded, onDownloadComplete, onStatusChange, externalProgress }, ref) => {
   const [progress, setProgress] = useState(isDownloaded ? 1 : 0);
   const [downloading, setDownloading] = useState(false);
   const [downloaded, setDownloaded] = useState(isDownloaded);
   const [paused, setPaused] = useState(false);
   // prettier-ignore
   const downloadResumableRef = React.useRef<FileSystem.DownloadResumable | null>(null);
+
   React.useEffect(() => {
     if (externalProgress !== undefined) {
       setProgress(externalProgress);
+    }
+  }, [externalProgress]);
+
+  React.useEffect(() => {
+    if (externalProgress === 0) {
+      setDownloading(false);
+      setPaused(false);
+      setDownloaded(false);
     }
   }, [externalProgress]);
 
@@ -115,7 +130,7 @@ const DownloadButton: React.FC<{
         try {
           await downloadResumableRef.current.pauseAsync();
           setPaused(true);
-          if(onStatusChange){ onStatusChange(episodeId, "paused") }
+          if (onStatusChange) { onStatusChange(episodeId, "paused"); }
           setDownloading(false);
         } catch (error) {
           console.error("Failed to pause download:", error);
@@ -129,27 +144,20 @@ const DownloadButton: React.FC<{
       if (downloadResumableRef.current) {
         try {
           setDownloading(true);
-          if(onStatusChange){ onStatusChange(episodeId, "downloading") }
+          if (onStatusChange) { onStatusChange(episodeId, "downloading"); }
           setPaused(false);
           const result = await downloadResumableRef.current.resumeAsync();
           if (result && result.uri) {
-            const storedData = await AsyncStorage.getItem(
-              "downloaded_episodes"
-            );
-            let downloadedEpisodes: string[] = storedData
-              ? JSON.parse(storedData)
-              : [];
+            const storedData = await AsyncStorage.getItem("downloaded_episodes");
+            let downloadedEpisodes: string[] = storedData ? JSON.parse(storedData) : [];
             if (!downloadedEpisodes.includes(episodeId)) {
               downloadedEpisodes.push(episodeId);
-              await AsyncStorage.setItem(
-                "downloaded_episodes",
-                JSON.stringify(downloadedEpisodes)
-              );
+              await AsyncStorage.setItem("downloaded_episodes", JSON.stringify(downloadedEpisodes));
             }
             setDownloaded(true);
             console.log("Download completed");
-            if(onDownloadComplete){ onDownloadComplete() }
-            if(onStatusChange){ onStatusChange(episodeId, "downloaded") }
+            if (onDownloadComplete) { onDownloadComplete(); }
+            if (onStatusChange) { onStatusChange(episodeId, "downloaded"); }
           }
         } catch (error) {
           console.error("Failed to resume download:", error);
@@ -172,13 +180,12 @@ const DownloadButton: React.FC<{
       const fileUri = FileSystem.documentDirectory + `downloaded_episodes/${episodeId}.mp4`;
       const callback = (downloadProgress: FileSystem.DownloadProgressData) => {
         const progressRatio =
-          downloadProgress.totalBytesWritten /
-          downloadProgress.totalBytesExpectedToWrite;
+          downloadProgress.totalBytesWritten / downloadProgress.totalBytesExpectedToWrite;
         setProgress(progressRatio);
       };
 
       setDownloading(true);
-      if(onStatusChange){ onStatusChange(episodeId, "downloading") }
+      if (onStatusChange) { onStatusChange(episodeId, "downloading"); }
       const downloadResumable = FileSystem.createDownloadResumable(
         downloadUrl,
         fileUri,
@@ -191,23 +198,18 @@ const DownloadButton: React.FC<{
       if (result && result.uri) {
         // gets the list of downloaded episodes from AsyncStorage
         const storedData = await AsyncStorage.getItem("downloaded_episodes");
-        let downloadedEpisodes: string[] = storedData
-          ? JSON.parse(storedData)
-          : [];
+        let downloadedEpisodes: string[] = storedData ? JSON.parse(storedData) : [];
 
         // if the episode is not in the list, add it
         if (!downloadedEpisodes.includes(episodeId)) {
           downloadedEpisodes.push(episodeId);
-          await AsyncStorage.setItem(
-            "downloaded_episodes",
-            JSON.stringify(downloadedEpisodes)
-          );
+          await AsyncStorage.setItem("downloaded_episodes", JSON.stringify(downloadedEpisodes));
         }
 
         setDownloaded(true);
         console.log("Download completed");
-        if(onDownloadComplete){ onDownloadComplete() }
-        if(onStatusChange){ onStatusChange(episodeId, "downloaded") }
+        if (onDownloadComplete) { onDownloadComplete(); }
+        if (onStatusChange) { onStatusChange(episodeId, "downloaded"); }
       }
     } catch (error) {
       console.error("Download failed:", error);
@@ -215,6 +217,28 @@ const DownloadButton: React.FC<{
       setDownloading(false);
     }
   };
+
+  // La funzione stopDownload esposta al parent: se il download è in corso, prima lo mette in pausa, poi resetta lo stato e il progresso
+  const stopDownload = async () => {
+    if (downloading && downloadResumableRef.current) {
+      try {
+        await downloadResumableRef.current.pauseAsync();
+      } catch (error) {
+        console.error("Error pausing download", error);
+      }
+    }
+    setProgress(0);
+    setDownloading(false);
+    setPaused(false);
+    setDownloaded(false);
+    if (onStatusChange) {
+      onStatusChange(episodeId, "idle");
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    stopDownload,
+  }));
 
   return (
     // the button is a progress circle that shows the download progress and it is disabled if the episode is already downloaded
@@ -237,7 +261,7 @@ const DownloadButton: React.FC<{
       />
     </Pressable>
   );
-};
+});
 
 const JSON_URL =
   "https://raw.githubusercontent.com/M4rga/one-pace-app/main/assets/others/episodes.json";
@@ -257,6 +281,11 @@ const index: React.FC = () => {
   >({});
   const [downloadProgresses, setDownloadProgresses] = useState<
     Record<string, number>
+  >({});
+
+  // Ref per accedere alle funzioni dei DownloadButton, indicizzate per episodeId
+  const downloadButtonRefs = React.useRef<
+    Record<string, { stopDownload: () => Promise<void> }>
   >({});
 
   // function to handle the long press on an episode
@@ -306,6 +335,12 @@ const index: React.FC = () => {
         text: "Stop Download",
         onPress: () => {
           console.log("Stop download pressed for episode", episodeId);
+          const btnRef = downloadButtonRefs.current[episodeId];
+          if (btnRef && btnRef.stopDownload) {
+            btnRef.stopDownload();
+          }
+          setDownloadProgresses((prev) => ({ ...prev, [episodeId]: 0 }));
+          setDownloadStatuses((prev) => ({ ...prev, [episodeId]: "idle" }));
         },
         style: "destructive",
       });
@@ -526,6 +561,12 @@ const index: React.FC = () => {
                             </Pressable>
                             {/* right side of the episode */}
                             <DownloadButton
+                              ref={(ref) => {
+                                if (ref) {
+                                  downloadButtonRefs.current[episodeData.id] =
+                                    ref;
+                                }
+                              }}
                               episodeId={episodeData.id}
                               isDownloaded={downloadedEpisodes.includes(
                                 episodeData.id
